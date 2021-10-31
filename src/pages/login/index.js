@@ -17,13 +17,9 @@ export default function Login(props) {
   const onChangePhoneNumber = (value) => setPhoneNumber(value);
   const onChangePassword = (value) => setPassword(value);
 
-  const register = () => {
-    // check required fields
-    if (!phoneNumber || !password) {
-      Toast('Please fill all fields', "warning");
-      return;
-    }
-    signUp();
+  const login = () => {
+    
+    navigation.navigate(SCREEN.NO_VENDOR);
   }
 
   return (
@@ -59,7 +55,7 @@ export default function Login(props) {
         </View>
 
 
-        <ButtonCustom title={"Đăng nhập"} />
+        <ButtonCustom title={"Đăng nhập"} onPress={login}/>
         <View style={styles.haveAccount}>
           <Text fontSize="lg" >Chưa có tài khoản?</Text>
           <TouchableOpacity onPress={()=> navigation.navigate(SCREEN.REGISTER)}>
