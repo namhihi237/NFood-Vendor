@@ -4,9 +4,9 @@ import { StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import { useNavigation } from '@react-navigation/native';
 import { useMutation } from '@apollo/client';
-import  {SCREEN} from '../../constants'
+import { SCREEN } from '../../constants'
 import { InputField, ButtonCustom, Toast, Loading } from '../../components';
-
+import { MUTATION } from "../../graphql";
 export default function Register(props) {
 
   const navigation = useNavigation();
@@ -17,9 +17,24 @@ export default function Register(props) {
   const onChangePhoneNumber = (value) => setPhoneNumber(value);
   const onChangePassword = (value) => setPassword(value);
 
+  const [signUp, loading] = useMutation(MUTATION.REGISTER, {
+    variables: {
+      phoneNumber,
+      password,
+      role: "vendor"
+    },
+    onCompleted: (data) => {
+      navigation.navigate(SCREEN.LOGIN);
+    },
+    onError: (error) => {
+      Toast(error.message, 'error');
+    }
+  });
+
+
   const register = () => {
     // check required fields
-    if (!phoneNumber || !password ) {
+    if (!phoneNumber || !password) {
       Toast('Please fill all fields', "warning");
       return;
     }
@@ -31,8 +46,8 @@ export default function Register(props) {
       contentInsetAdjustmentBehavior="automatic"
       showsVerticalScrollIndicator={false}
     >
-      {/* <Loading status={loading} message={'Sign up'} /> */}
-      <View style={styles.mainContainer}>
+      <Loading status={loading} message={'Sign up'} />
+      < View style={styles.mainContainer} >
         <Text fontSize="3xl" bold style={styles.title}>Đăng Ký tài khoản</Text>
         <InputField
           iconName={"mobile-alt"}
@@ -52,16 +67,16 @@ export default function Register(props) {
         />
         <View style={{ marginBottom: hp('4%') }}></View>
 
-        <ButtonCustom title={"Đăng ký"} />
+        <ButtonCustom title={"Đăng ký"} onPress={register} />
         <View style={styles.haveAccount}>
           <Text fontSize="lg" >Đã có tài khoản?</Text>
           <TouchableOpacity onPress={() => navigation.navigate(SCREEN.LOGIN)} >
             <Text bold fontSize="lg" style={styles.textLink}>Đăng nhập</Text>
           </TouchableOpacity>
         </View>
-      </View>
-      
-    </ScrollView>
+      </View >
+
+    </ScrollView >
   );
 }
 

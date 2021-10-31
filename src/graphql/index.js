@@ -1,2 +1,4 @@
 import client from "./client";
-export { client };
+import MUTATION from "./mutation";
+
+export { client, MUTATION };
