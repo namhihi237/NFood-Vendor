@@ -20,8 +20,9 @@ const InputField = (props) => {
     setColor('#D7D9DB');
   };
 
+  const width = props.width ? wp(props.width) : wp('80%');
   return (
-    <View style={{ ...styles.inputView, borderColor: color, borderWidth: height }}>
+    <View style={{ ...styles.inputView, borderColor: color, borderWidth: height, width }}>
       <FontAwesome5 name={props.iconName} style={styles.icon} />
       <TextInput
         onChangeText={props.onChangeText}
@@ -39,7 +40,6 @@ const InputField = (props) => {
 
 const styles = StyleSheet.create({
   inputView: {
-    width: wp('80%'),
     height: 60,
     display: 'flex',
     flexDirection: 'row',

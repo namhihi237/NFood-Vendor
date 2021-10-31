@@ -30,7 +30,7 @@ export default function NoVendor(props) {
         </Text>
       </View>
       <View style={{ alignItems: 'center' }}>
-        <ButtonCustom title={"Đăng ký cửa hàng"} />
+        <ButtonCustom title={"Đăng ký cửa hàng"} onPress={() => navigation.navigate(SCREEN.REGISTER_VENDOR)} />
       </View>
     </View>
   );

@@ -7,8 +7,9 @@ import {
 } from 'react-native-responsive-screen';
 
 const ButtonCustom = (props) => {
+  const width = props.width ? wp(props.width) : wp('80%');
   return (
-    <TouchableOpacity style={{ ...styles.btn, ...props.style }} onPress={props.onPress}>
+    <TouchableOpacity style={{ ...styles.btn, ...props.style, width }} onPress={props.onPress}>
       <Text fontSize="xl" bold style={styles.text}>{props.title}</Text>
     </TouchableOpacity>
   );
@@ -19,7 +20,6 @@ const styles = StyleSheet.create({
   btn: {
     backgroundColor: '#000000',
     height: hp('8%'),
-    width: wp('80%'),
     borderRadius: 6,
     justifyContent: 'center',
     alignItems: 'center',

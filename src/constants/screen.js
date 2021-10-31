@@ -5,6 +5,7 @@ export default {
   LOGIN: 'login',
   REGISTER: 'register',
   NO_VENDOR: 'noVendor',
+  REGISTER_VENDOR: 'registerVendor',
   AUTH_PHONE: 'authPhone',
   USER_TAB: 'userStack',
   HOME_STACK: 'homeStack',
