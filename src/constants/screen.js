@@ -1,0 +1,18 @@
+export default {
+  LOGO: 'logo',
+  BOARDING: 'boarding',
+  LOGIN_SIGN_UP: 'loginSignUp',
+  LOGIN: 'login',
+  REGISTER: 'register',
+  AUTH_PHONE: 'authPhone',
+  USER_TAB: 'userStack',
+  HOME_STACK: 'homeStack',
+  HOME: 'home',
+  NOTIFICATION: 'notification',
+  FAVORITE: 'favorite',
+  ME: 'me',
+  ITEM: 'item',
+  POPULAR_LIST: 'popularList',
+  CART: 'cart',
+  CHECKOUT: 'checkout',
+}
