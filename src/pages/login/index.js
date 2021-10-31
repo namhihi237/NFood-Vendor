@@ -1,13 +1,13 @@
-import { Text, Image, Box, View } from "native-base";
+import { Text, Image, Box, View, Switch} from "native-base";
 import React, { useEffect, useState } from 'react';
 import { StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import { useNavigation } from '@react-navigation/native';
 import { useMutation } from '@apollo/client';
-import  {SCREEN} from '../../constants'
-import { InputField, ButtonCustom, Toast, Loading } from '../../components';
 
-export default function Register(props) {
+import { InputField, ButtonCustom, Toast, Loading } from '../../components';
+import {SCREEN} from "../../constants"
+export default function Login(props) {
 
   const navigation = useNavigation();
 
@@ -19,7 +19,7 @@ export default function Register(props) {
 
   const register = () => {
     // check required fields
-    if (!phoneNumber || !password ) {
+    if (!phoneNumber || !password) {
       Toast('Please fill all fields', "warning");
       return;
     }
@@ -33,7 +33,7 @@ export default function Register(props) {
     >
       {/* <Loading status={loading} message={'Sign up'} /> */}
       <View style={styles.mainContainer}>
-        <Text fontSize="3xl" bold style={styles.title}>Đăng Ký tài khoản</Text>
+        <Text fontSize="3xl" bold style={styles.title}>Đăng nhập</Text>
         <InputField
           iconName={"mobile-alt"}
           placeholder="09xxxxxxx9"
@@ -45,22 +45,29 @@ export default function Register(props) {
           placeholder="************"
           onChangeText={onChangePassword}
         />
-        <InputField
-          iconName={"lock"}
-          secureTextEntry={true}
-          placeholder="************"
-        />
-        <View style={{ marginBottom: hp('4%') }}></View>
+        <View style={styles.saveMeContainer}>
+          <View style={styles.saveMe}>
+            <Switch
+              colorScheme="dark" 
+              size="md"
+            />
+            <Text fontSize="md" style={styles.textColor} bold>Lưu mật khẩu</Text>
+          </View>
+          <TouchableOpacity>
+            <Text fontSize="md" style={styles.textColor} bold>Quên mật khẩu?</Text>
+          </TouchableOpacity>
+        </View>
 
-        <ButtonCustom title={"Đăng ký"} />
+
+        <ButtonCustom title={"Đăng nhập"} />
         <View style={styles.haveAccount}>
-          <Text fontSize="lg" >Đã có tài khoản?</Text>
-          <TouchableOpacity onPress={() => navigation.navigate(SCREEN.LOGIN)} >
-            <Text bold fontSize="lg" style={styles.textLink}>Đăng nhập</Text>
+          <Text fontSize="lg" >Chưa có tài khoản?</Text>
+          <TouchableOpacity onPress={()=> navigation.navigate(SCREEN.REGISTER)}>
+            <Text bold fontSize="lg" style={styles.textLink}>Đăng ký</Text>
           </TouchableOpacity>
         </View>
       </View>
-      
+
     </ScrollView>
   );
 }
@@ -108,6 +115,20 @@ const styles = StyleSheet.create({
   textLink: {
     color: '#36AFDC',
     marginLeft: wp('2%'),
+  },
+   textColor: {
+    color: "#444251"
+  },
+  saveMe: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  saveMeContainer: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginBottom: hp('4%'),
+    width: wp('80%'),
   }
-
 });

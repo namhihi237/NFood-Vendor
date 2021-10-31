@@ -1,8 +1,8 @@
 import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-// import { SCREEN } from '../constants';
-import { Register  } from '../pages';
+import { SCREEN } from '../constants';
+import { Register, Login  } from '../pages';
 
 const Stack = createStackNavigator();
 
@@ -22,13 +22,14 @@ const Navigation = () => {
   return (
     <NavigationContainer>
       <Stack.Navigator
-        initialRouteName={"R"}
+        initialRouteName={SCREEN.REGISTER}
         screenOptions={{
           headerShown: false,
           transitionSpec: { open: config, close: config },
           gestureDirection: 'horizontal',
         }}>
-        <Stack.Screen name={"R"} component={Register} />
+        <Stack.Screen name={SCREEN.REGISTER} component={Register} />
+        <Stack.Screen name={SCREEN.LOGIN} component={Login} />
        
       </Stack.Navigator>
     </NavigationContainer>
