@@ -17,7 +17,7 @@ export default function Register(props) {
   const onChangePhoneNumber = (value) => setPhoneNumber(value);
   const onChangePassword = (value) => setPassword(value);
 
-  const [signUp, loading] = useMutation(MUTATION.REGISTER, {
+  const [signUp, { loading }] = useMutation(MUTATION.REGISTER, {
     variables: {
       phoneNumber,
       password,
@@ -46,7 +46,7 @@ export default function Register(props) {
       contentInsetAdjustmentBehavior="automatic"
       showsVerticalScrollIndicator={false}
     >
-      <Loading status={loading} message={'Sign up'} />
+      <Loading status={loading} message={'Đămg ký'} />
       < View style={styles.mainContainer} >
         <Text fontSize="3xl" bold style={styles.title}>Đăng Ký tài khoản</Text>
         <InputField

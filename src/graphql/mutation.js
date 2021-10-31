@@ -6,5 +6,16 @@ export default {
       role
       phoneNumber  
     }
-  }`
+  }`,
+
+  LOGIN: gql`mutation login($phoneNumber: String!, $password: String!) {
+    login(phoneNumber: $phoneNumber, password: $password) {
+      user {
+        _id
+        role
+        isVendor
+      }
+      token
+    }
+  }`,
 }

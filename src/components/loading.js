@@ -2,12 +2,14 @@ import React from 'react';
 import { ActivityIndicator, StyleSheet, View, Modal, Text } from 'react-native';
 
 const Loading = (props) => {
+  console.log(props.message);
+  const justifyContent = props.message ? 'space-around' : 'center';
   return (
     <Modal visible={props.status || false} transparent={true} animationType={'none'}>
       <View style={styles.modalBackground}>
-        <View style={styles.activityIndicatorWrapper}>
+        <View style={{ ...styles.activityIndicatorWrapper, justifyContent }}>
           <ActivityIndicator size="large" color="#00ff00" />
-          {props.message ? <Text style={styles.text}>{props.message}</Text> : null}
+          {props.message ? <Text style={{ color: "#000" }}>{props.message}</Text> : null}
         </View>
       </View>
     </Modal>
@@ -30,9 +32,6 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     display: 'flex',
     alignItems: 'center',
-    justifyContent: 'space-around',
   },
-  text: {
-    fontFamily: 'TimesNewRoman',
-  },
+
 });
