@@ -60,7 +60,7 @@ export default function Login(props) {
       await storageUtils.setString('token', data.login.token);
 
       if (data.login.user.isVendor) {
-        // navigation.navigate(SCREEN.HOME)
+        navigation.navigate(SCREEN.TAB);
       } else {
         navigation.navigate(SCREEN.NO_VENDOR);
       }
@@ -75,6 +75,8 @@ export default function Login(props) {
       Toast('Vui lòng nhập đầy đủ thông tin', 'danger');
       return;
     }
+    storageUtils.setString('phoneNumber', phoneNumber);
+    storageUtils.setString('password', password);
     loginMutation();
   }
 
@@ -90,11 +92,13 @@ export default function Login(props) {
           iconName={"mobile-alt"}
           placeholder="09xxxxxxx9"
           onChangeText={onChangePhoneNumber}
+          value={phoneNumber}
         />
         <InputField
           iconName={"lock"}
           secureTextEntry={true}
           placeholder="************"
+          value={password}
           onChangeText={onChangePassword}
         />
         <View style={styles.saveMeContainer}>
@@ -138,6 +142,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     height: hp('95%'),
     alignItems: 'center',
+    paddingTop: hp('15%'),
   },
   title: {
     marginBottom: hp('5%'),
@@ -163,7 +168,7 @@ const styles = StyleSheet.create({
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'center',
-    marginTop: hp('3%'),
+    marginTop: hp('25%'),
 
   },
   textLink: {
@@ -182,7 +187,7 @@ const styles = StyleSheet.create({
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'space-between',
-    marginBottom: hp('4%'),
+    marginBottom: hp('5%'),
     width: wp('80%'),
   }
 });

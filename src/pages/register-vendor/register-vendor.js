@@ -31,6 +31,7 @@ export default function RegisterVendor(props) {
     },
     onCompleted: data => {
       Toast("Đăng ký mở thành công", "success", "top-right");
+      navigation.navigate(SCREEN.TAB);
     },
     onError: error => {
       Toast(error.message, "danger");
