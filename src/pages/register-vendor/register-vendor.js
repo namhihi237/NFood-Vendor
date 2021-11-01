@@ -25,7 +25,7 @@ export default function RegisterVendor(props) {
   const onChangeName = value => setName(value);
   const onChangeAddress = value => setAddress(value);
 
-  const [activeVendor, { loading }] = useMutation(MUTATION.ACTIVE_VENDOR, {
+  const [activeVendor, { loading: loading1 }] = useMutation(MUTATION.ACTIVE_VENDOR, {
     variables: {
       name, address, image
     },
@@ -37,19 +37,17 @@ export default function RegisterVendor(props) {
     }
   });
 
-  const [getSignature] = useLazyQuery(QUERY.GET_SIGNATURE, {
+  const [getSignature, { loading: loading2 }] = useLazyQuery(QUERY.GET_SIGNATURE, {
 
     onCompleted: async data => {
       let link = data.getSignatureImage;
-      console.log(link);
       try {
-        console.log("upload");
         const upload = await axios.post(link, createFormData(photo), {
           headers: {
             'Content-Type': 'multipart/form-data',
           },
         });
-        let image1 = upload.data.url || null;
+        let image1 = upload.data.secure_url || null;
         console.log(image1);
         if (!image1) {
           Toast('Đã có lỗi thử lại!', 'danger');
@@ -58,7 +56,7 @@ export default function RegisterVendor(props) {
         setImage(image1);
         activeVendor();
       } catch (error) {
-        console.log(error);
+        Toast('Đã có lỗi thử lại!', 'danger');
       }
     },
     onError: error => {
@@ -91,7 +89,7 @@ export default function RegisterVendor(props) {
       showsVerticalScrollIndicator={false}
     >
       <View style={styles.mainContainer}>
-        <Loading loading={loading} />
+        <Loading loading={loading1 || loading2} />
         <View>
           <View style={{ alignItems: 'center', marginTop: hp("5%"), marginBottom: 30 }}>
             <Text fontSize="2xl" bold>Mở cửa hàng</Text>
