@@ -7,6 +7,7 @@ import { useMutation } from '@apollo/client';
 import { MUTATION } from "../../graphql";
 import { InputField, ButtonCustom, Toast, Loading } from '../../components';
 import { SCREEN } from "../../constants"
+import { storageUtils } from "../../utils"
 export default function Login(props) {
 
   const navigation = useNavigation();
@@ -16,17 +17,50 @@ export default function Login(props) {
 
   const onChangePhoneNumber = (value) => setPhoneNumber(value);
   const onChangePassword = (value) => setPassword(value);
+  const [check, setCheck] = useState(false);
+
+  const getCheck = async () => {
+    let check;
+    if (await storageUtils.getString('check')) {
+      check = true;
+      let phoneNumber = await storageUtils.getString('phoneNumber');
+      let password = await storageUtils.getString('password');
+
+      setPhoneNumber(phoneNumber);
+      setPassword(password);
+    } else {
+      check = false;
+    }
+    setCheck(check);
+  };
+
+  const saveInfo = () => {
+    setCheck(!check);
+    if (check) {
+      storageUtils.setString('check', '');
+      storageUtils.setString('email', '');
+      storageUtils.setString('password', '');
+    } else {
+      storageUtils.setString('check', '1');
+    }
+  };
+
+  useEffect(() => {
+    getCheck();
+  }, []);
+
 
   const [loginMutation, { loading }] = useMutation(MUTATION.LOGIN, {
     variables: {
       phoneNumber,
       password
     },
-    onCompleted: (data) => {
-      Toast('Đăng nhập thành công', 'success');
+    onCompleted: async (data) => {
+      Toast('Đăng nhập thành công', 'success', 'top-right');
+      await storageUtils.setString('token', data.login.token);
+
       if (data.login.user.isVendor) {
         // navigation.navigate(SCREEN.HOME)
-        console.log("Home");
       } else {
         navigation.navigate(SCREEN.NO_VENDOR);
       }
@@ -68,6 +102,8 @@ export default function Login(props) {
             <Switch
               colorScheme="dark"
               size="md"
+              onToggle={saveInfo}
+              isChecked={check}
             />
             <Text fontSize="md" style={styles.textColor} bold>Lưu mật khẩu</Text>
           </View>

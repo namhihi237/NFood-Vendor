@@ -2,7 +2,6 @@ import React from 'react';
 import { ActivityIndicator, StyleSheet, View, Modal, Text } from 'react-native';
 
 const Loading = (props) => {
-  console.log(props.message);
   const justifyContent = props.message ? 'space-around' : 'center';
   return (
     <Modal visible={props.status || false} transparent={true} animationType={'none'}>

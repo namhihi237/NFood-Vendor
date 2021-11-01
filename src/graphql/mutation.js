@@ -18,4 +18,10 @@ export default {
       token
     }
   }`,
+
+  ACTIVE_VENDOR: gql`mutation activeVendor($name: String!, $address: String!, $image: String!) {
+    activeVendor(name: $name, address: $address, image: $image) {
+      message
+    }
+  } `
 }
