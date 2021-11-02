@@ -3,11 +3,18 @@ import React, { useEffect, useState } from 'react';
 import { StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import { useNavigation } from '@react-navigation/native';
-import { useMutation } from '@apollo/client';
-
+import { useMutation, useQuery } from '@apollo/client';
+import { QUERY } from "../../graphql";
 import { InputField, ButtonCustom, Toast, Loading } from '../../components';
 import { SCREEN } from "../../constants"
 export default function NewOrder(props) {
+
+  const { data } = useQuery(QUERY.GET_PROFILE, {
+    variables: {
+      role: "vendor"
+    },
+    fetchPolicy: "cache-first"
+  });
 
   const navigation = useNavigation();
   return (
