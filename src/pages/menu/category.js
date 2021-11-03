@@ -1,25 +1,23 @@
 import React from 'react';
 import { Text, Switch } from 'native-base';
-import { StyleSheet, TouchableOpacity, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
-import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import AddButton from './add-button';
 
 const Category = (props) => {
   const { data } = props;
-  console.log(props);
   return (
     <View style={styles.category} onPress={props.onPress}>
       <View style={styles.header}>
         <Text style={styles.categoryText} bold fontSize="md">{data?.name || 'Tra Sua'}</Text>
         <Switch
-          value={props.isActive}
-          onValueChange={props.onChange}
+          onToggle={props.onToggle}
+          isChecked={data.isActive}
           trackColor={{ true: '#000', false: '#a4a4a4a4' }}
-          thumbColor={props.isActive ? '#000' : '#000'}
+          thumbColor={data.isActive ? '#000' : '#000'}
           fontSize="sm"
         />
       </View>

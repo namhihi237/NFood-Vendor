@@ -32,7 +32,7 @@ const TabBar = ({ state, descriptors, navigation }) => {
         };
 
         return (
-          <TouchableOpacity onPress={onPress} style={styles.button}>
+          <TouchableOpacity onPress={onPress} style={styles.button} key={route.key}>
             <View style={isFocused ? styles.focus : styles.noFocus}>
               {options.icon == 'bell' && count != 0 ? (
                 <Badge

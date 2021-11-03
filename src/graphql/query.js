@@ -23,6 +23,7 @@ export default {
     getAllCategory {
       _id
       name
+      isActive
       items {
         _id
         name

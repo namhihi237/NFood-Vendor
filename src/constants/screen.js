@@ -12,4 +12,5 @@ export default {
   STORE: 'store',
   TAB: 'tab',
   MENU: 'menu',
+  ADD_CATEGORY: 'addCategory',
 }

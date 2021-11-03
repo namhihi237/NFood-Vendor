@@ -29,6 +29,7 @@ export default {
     createCategory(name: $name) {
       _id
       name
+      isActive
       items {
         _id
         name

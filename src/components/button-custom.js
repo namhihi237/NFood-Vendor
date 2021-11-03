@@ -8,8 +8,9 @@ import {
 
 const ButtonCustom = (props) => {
   const width = props.width ? wp(props.width) : wp('80%');
+  const height = props.height ? hp(props.height) : hp('8%');
   return (
-    <TouchableOpacity style={{ ...styles.btn, ...props.style, width }} onPress={props.onPress}>
+    <TouchableOpacity style={{ ...styles.btn, ...props.style, width, height }} onPress={props.onPress} >
       <Text fontSize="xl" bold style={styles.text}>{props.title}</Text>
     </TouchableOpacity>
   );
