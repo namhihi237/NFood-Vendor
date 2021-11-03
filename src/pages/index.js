@@ -5,7 +5,7 @@ import NewOrder from "./new-order";
 import Manager from "./manager";
 import Notification from "./notification";
 import Store from "./store";
-import { Menu, AddCategory } from './menu';
+import { Menu, AddCategory, EditCategory } from './menu';
 
 export {
   Register,
@@ -17,5 +17,6 @@ export {
   Notification,
   Store,
   Menu,
-  AddCategory
+  AddCategory,
+  EditCategory
 };

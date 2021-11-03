@@ -49,7 +49,7 @@ const styles = StyleSheet.create({
 
   inputText: {
     color: '#000',
-    width: wp('70%'),
+    width: wp('85%'),
     fontSize: 16,
   },
 });

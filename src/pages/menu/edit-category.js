@@ -12,7 +12,7 @@ import { QUERY, client, MUTATION } from '../../graphql';
 import { useMutation, useQuery } from '@apollo/client';
 import { useNavigation } from '@react-navigation/native';
 import { SCREEN } from '../../constants';
-const AddCategory = (props) => {
+const EditCategory = (props) => {
   const navigation = useNavigation();
 
   const [name, setName] = React.useState('');
@@ -69,7 +69,7 @@ const AddCategory = (props) => {
     </ScrollView>
   );
 };
-export default AddCategory;
+export default EditCategory;
 
 const styles = StyleSheet.create({
   container: {

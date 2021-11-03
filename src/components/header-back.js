@@ -30,7 +30,7 @@ export default HeaderBack;
 
 const styles = StyleSheet.create({
   header: {
-    height: 70,
+    height: hp('7%'),
     flexDirection: 'row',
     justifyContent: 'space-between',
     display: 'flex',
@@ -45,7 +45,6 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
   },
-
   text: {
     marginLeft: 15,
     color: '#444251'
