@@ -11,4 +11,5 @@ export default {
   NOTIFICATION: 'notification',
   STORE: 'store',
   TAB: 'tab',
+  MENU: 'menu',
 }

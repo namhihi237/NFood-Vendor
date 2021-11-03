@@ -17,5 +17,18 @@ export default {
       coordinates
       name
     }
+  }`,
+
+  GET_CATEGORY: gql`query getAllCategory {
+    getAllCategory {
+      _id
+      name
+      items {
+        _id
+        name
+        price
+        image
+      }
+    }
   }`
 };

@@ -8,7 +8,6 @@ import { SCREEN } from "../../constants";
 
 export default function Info(props) {
   const { user } = props;
-  console.log(user);
   const navigation = useNavigation();
   return (
     <View style={styles.infoStore}>

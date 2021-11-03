@@ -23,5 +23,18 @@ export default {
     activeVendor(name: $name, address: $address, image: $image) {
       message
     }
-  } `
+  }`,
+
+  ADD_CATEGORY: gql`mutation createCategory($name: String!) {
+    createCategory(name: $name) {
+      _id
+      name
+      items {
+        _id
+        name
+        image
+        price
+      }
+    }
+  }`
 }
