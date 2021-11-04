@@ -8,7 +8,7 @@ import {
 import AddButton from './add-button';
 import { useNavigation } from '@react-navigation/native';
 import { useMutation } from '@apollo/client';
-import { QUERY, client } from '../../graphql';
+import { QUERY, client, MUTATION } from '../../graphql';
 import { SCREEN } from "../../constants";
 const Category = (props) => {
   const { data } = props;

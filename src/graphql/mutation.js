@@ -45,5 +45,9 @@ export default {
 
   DELETE_CATEGORY: gql`mutation deleteCategory($id: ID!) {
     deleteCategory(id: $id)
-  }`
+  }`,
+
+  TOGGLE_CATEGORY: gql`mutation toggleCategory($id: ID!) {
+    toggleCategory(id: $id)
+  }`,
 }
