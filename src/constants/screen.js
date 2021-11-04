@@ -13,5 +13,7 @@ export default {
   TAB: 'tab',
   MENU: 'menu',
   ADD_CATEGORY: 'addCategory',
-  EDIT_CATEGORY: 'editCategory'
+  EDIT_CATEGORY: 'editCategory',
+  ADD_ITEM: 'addItem',
+  EDIT_ITEM: 'editItem',
 }

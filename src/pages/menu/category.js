@@ -30,7 +30,7 @@ const Category = (props) => {
       </View>
       <View style={styles.action}>
         <AddButton title="Chỉnh sửa" type="edit" onPress={() => navigation.navigate(SCREEN.EDIT_CATEGORY, { category: data })} />
-        <AddButton title="Thêm món" />
+        <AddButton title="Thêm món" onPress={() => navigation.navigate(SCREEN.ADD_ITEM)} />
       </View>
       <View style={styles.line}></View>
       {
