@@ -2,6 +2,10 @@
 class MoneyUtils {
   convertStringToVND(money) {
     // convert format money VND
+    if (!money) {
+      return 0;
+    }
+
     if (money.indexOf('.') !== -1) {
       money = money.replace(/\./g, '');
     }

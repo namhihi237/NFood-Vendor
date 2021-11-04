@@ -10,6 +10,8 @@ import { useNavigation } from '@react-navigation/native';
 import { useMutation } from '@apollo/client';
 import { QUERY, client, MUTATION } from '../../graphql';
 import { SCREEN } from "../../constants";
+import Item from './item';
+
 const Category = (props) => {
   const { data } = props;
   const navigation = useNavigation();
@@ -31,6 +33,13 @@ const Category = (props) => {
         <AddButton title="Thêm món" />
       </View>
       <View style={styles.line}></View>
+      {
+        data.items.length != 0 ? data.items.map((item, index) => {
+          return <Item key={index} data={item} />
+        }) : (<View style={styles.noItem}>
+          <Text style={styles.noItemText} italic>Danh mục này của bạn hiện không có món ăn nào, hãy thêm món để được đa dạng thực đơn hơn</Text>
+        </View>)
+      }
     </View>
   );
 };
@@ -59,4 +68,14 @@ const styles = StyleSheet.create({
     marginTop: hp('1%'),
     marginBottom: hp('1%'),
   },
+  noItem: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    display: 'flex',
+    height: hp('10%'),
+    paddingHorizontal: wp('8%'),
+  },
+  noItemText: {
+    color: '#a4a4a4a4',
+  }
 });

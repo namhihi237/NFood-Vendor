@@ -64,7 +64,7 @@ export default function Menu(props) {
 
   const navigation = useNavigation();
   return (
-    <View style={{ paddingBottom: hp('7%'), backgroundColor: '#fff' }}>
+    <View style={{ paddingBottom: hp('7%'), }}>
       <Loading status={loading} />
       <HeaderBack title="Menu" button={"Lưu"} />
       <FlatList
