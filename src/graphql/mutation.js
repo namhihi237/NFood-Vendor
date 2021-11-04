@@ -50,4 +50,8 @@ export default {
   TOGGLE_CATEGORY: gql`mutation toggleCategory($id: ID!) {
     toggleCategory(id: $id)
   }`,
+
+  TOGGLE_ITEM: gql`mutation toggleItemStatus($id: ID!) {
+    toggleItemStatus(id: $id)
+  }`
 }

@@ -29,6 +29,7 @@ export default {
         name
         price
         image
+        isActive
       }
     }
   }`

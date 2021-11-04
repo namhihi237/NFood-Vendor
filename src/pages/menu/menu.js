@@ -18,6 +18,7 @@ export default function Menu(props) {
     fetchPolicy: "cache-and-network",
     onCompleted: (data) => {
       setCategories(data.getAllCategory);
+      console.log(data.getAllCategory);
     }
   });
 
