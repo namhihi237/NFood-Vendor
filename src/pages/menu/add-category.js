@@ -5,7 +5,6 @@ import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
-import AddButton from './add-button';
 import { ButtonCustom, Toast, Loading, HeaderBack } from '../../components';
 import InputField from './input-field';
 import { QUERY, client, MUTATION } from '../../graphql';
@@ -31,7 +30,7 @@ const AddCategory = (props) => {
       });
     },
     onCompleted: () => {
-      Toast('Category added successfully', 'success', 'top-right');
+      Toast('Tạo mới danh mục thành công', 'success', 'top-right');
       navigation.navigate(SCREEN.MENU);
     },
     onError: (error) => {

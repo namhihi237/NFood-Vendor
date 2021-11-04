@@ -13,4 +13,5 @@ export default {
   TAB: 'tab',
   MENU: 'menu',
   ADD_CATEGORY: 'addCategory',
+  EDIT_CATEGORY: 'editCategory'
 }

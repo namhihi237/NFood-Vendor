@@ -1,37 +1,73 @@
 import React from 'react';
-import { Text, Switch } from 'native-base';
-import { StyleSheet, View, ScrollView, } from 'react-native';
+import { Text, Modal, Button } from 'native-base';
+import { StyleSheet, View, ScrollView, TouchableOpacity } from 'react-native';
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
-import AddButton from './add-button';
 import { ButtonCustom, Toast, Loading, HeaderBack } from '../../components';
 import InputField from './input-field';
 import { QUERY, client, MUTATION } from '../../graphql';
 import { useMutation, useQuery } from '@apollo/client';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useRoute } from '@react-navigation/native';
 import { SCREEN } from '../../constants';
+import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
+
 const EditCategory = (props) => {
   const navigation = useNavigation();
+  const route = useRoute();
+  const [name, setName] = React.useState(route.params.category.name);
+  const [modalVisible, setModalVisible] = React.useState(false)
 
-  const [name, setName] = React.useState('');
-  const [addCategory, { loading }] = useMutation(MUTATION.ADD_CATEGORY, {
+  const [deleteCategory, { loading }] = useMutation(MUTATION.DELETE_CATEGORY, {
     variables: {
-      name
+      id: route.params.category._id,
     },
-    // refetchQueries: [{ query: QUERY.GET_CATEGORY }],
-    update(cache, { data: { createCategory } }) {
-      const { getAllCategory } = cache.readQuery({ query: QUERY.GET_CATEGORY });
+    update(cache, { data: { deleteCategory } }) {
+      const { getAllCategory } = cache.readQuery({
+        query: QUERY.GET_CATEGORY,
+      });
       cache.writeQuery({
         query: QUERY.GET_CATEGORY,
         data: {
-          getAllCategory: [...getAllCategory, createCategory]
-        }
+          getAllCategory: getAllCategory.filter(
+            (category) => JSON.stringify(category._id) !== JSON.stringify(route.params.category._id),
+          ),
+        },
       });
     },
     onCompleted: () => {
-      Toast('Category added successfully', 'success', 'top-right');
+      Toast('Xóa danh mục thành công', 'success', 'top-right');
+      navigation.navigate(SCREEN.MENU);
+    },
+    onError: (error) => {
+      Toast(error.message, 'danger', 'top-right');
+    }
+  });
+
+  const [updateCategory, { loading: loadingUpdate }] = useMutation(MUTATION.UPDATE_CATEGORY, {
+    variables: {
+      id: route.params.category._id,
+      name,
+    },
+    update(cache, { data: { updateCategory } }) {
+      const { getAllCategory } = cache.readQuery({
+        query: QUERY.GET_CATEGORY,
+      });
+      cache.writeQuery({
+        query: QUERY.GET_CATEGORY,
+        data: {
+          getAllCategory: getAllCategory.map((category) => {
+            if (JSON.stringify(category._id) === JSON.stringify(route.params.category._id)) {
+              return { ...category, name }
+            }
+            return category;
+          }),
+        },
+      });
+    },
+    onCompleted: () => {
+      Toast('Cập nhật danh mục thành công', 'success', 'top-right');
       navigation.navigate(SCREEN.MENU);
     },
     onError: (error) => {
@@ -41,31 +77,58 @@ const EditCategory = (props) => {
 
   const onChangeName = (name) => setName(name);
 
-  const createCategory = () => {
+  const editCategory = () => {
     if (!name) {
       Toast('Vui lòng nhập tên danh mục', 'danger', 'top-right');
       return;
     }
-    addCategory();
+    updateCategory();
   };
 
   return (
     <ScrollView style={styles.container} contentInsetAdjustmentBehavior="automatic"
       showsVerticalScrollIndicator={false}>
-      <HeaderBack title="Tạo danh mục" />
-      <Loading status={loading} />
+      <HeaderBack title="Chỉnh sửa danh mục" />
+      <Loading status={loading || loadingUpdate} />
       <View style={styles.content}>
         <View>
           <Text>Tên danh mục</Text>
-          <InputField
-            placeholder="Tên danh mục..."
-            onChangeText={(text) => props.onChangeText(text)}
-            width="90%"
-            onChangeText={onChangeName}
-          />
+          <InputField placeholder="Tên danh mục..." onChangeText={(text) => props.onChangeText(text)} width="90%" onChangeText={onChangeName} value={name} />
+          <View style={styles.deleteIcon}>
+            <TouchableOpacity onPress={() => setModalVisible(!modalVisible)}>
+              <FontAwesome5 name="trash-alt" size={20} color="red" />
+            </TouchableOpacity>
+            <Text style={styles.deleteText} italic>Xóa danh mục này</Text>
+          </View>
         </View>
-        <ButtonCustom title="Tạo danh mục" height="6%" width="90%" onPress={createCategory} />
+        <ButtonCustom title="Cập nhật" height="6%" width="90%" onPress={editCategory} />
       </View>
+      <Modal
+        isOpen={modalVisible}
+        onClose={() => setModalVisible(false)}
+        closeOnOverlayClick={false}
+      >
+        <Modal.Content>
+          <Modal.CloseButton />
+          <Modal.Header>Xóa danh mục</Modal.Header>
+          <Modal.Body>
+            <Text>Nếu bạn xóa danh mục này thì các món ăn trong danh mục cũng sẽ bị xóa và sẽ không thể lấy lại được lại được. Vấn tiếp tục!</Text>
+          </Modal.Body>
+          <Modal.Footer>
+            <Button.Group space={2}>
+              <Button variant="ghost" colorScheme="blueGray" onPress={() => setModalVisible(false)}>Hủy</Button>
+              <Button
+                onPress={() => {
+                  setModalVisible(false);
+                  deleteCategory();
+                }}
+              >
+                Xóa
+              </Button>
+            </Button.Group>
+          </Modal.Footer>
+        </Modal.Content>
+      </Modal>
     </ScrollView>
   );
 };
@@ -83,4 +146,13 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     height: hp('85%'),
   },
+  deleteIcon: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginTop: 10,
+  },
+  deleteText: {
+    marginLeft: 6,
+    color: '#a4a4a4a4'
+  }
 });

@@ -37,5 +37,13 @@ export default {
         price
       }
     }
+  }`,
+
+  UPDATE_CATEGORY: gql`mutation updateCategory($id: ID!, $name: String!) {
+    updateCategory(id: $id, name: $name)
+  }`,
+
+  DELETE_CATEGORY: gql`mutation deleteCategory($id: ID!) {
+    deleteCategory(id: $id)
   }`
 }

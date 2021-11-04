@@ -2,7 +2,7 @@ import { Text, Box, View, Switch } from "native-base";
 import React, { useEffect, useState } from 'react';
 import { StyleSheet, TouchableOpacity, ScrollView, FlatList } from 'react-native';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
-import { useNavigation , useIsFocused} from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
 import { useMutation, useQuery, useLazyQuery } from '@apollo/client';
 import { InputField, ButtonCustom, Toast, Loading, HeaderBack } from '../../components';
 import { SCREEN } from "../../constants";
@@ -43,8 +43,8 @@ export default function Menu(props) {
 
   const navigation = useNavigation();
   return (
-    <View style={{ paddingBottom: hp('7%') }}>
-      <Loading status={ loading} />
+    <View style={{ paddingBottom: hp('7%'), backgroundColor: '#fff' }}>
+      <Loading status={loading} />
       <HeaderBack title="Menu" button={"Lưu"} />
       <FlatList
         data={[1]}
@@ -61,5 +61,6 @@ const styles = StyleSheet.create({
   mainContainer: {
     flex: 1,
     display: 'flex',
+    minHeight: hp('86%'), /// 7 + 7 + 86 = 100%;
   },
 });

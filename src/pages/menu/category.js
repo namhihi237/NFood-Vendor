@@ -6,9 +6,14 @@ import {
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
 import AddButton from './add-button';
-
+import { useNavigation } from '@react-navigation/native';
+import { useMutation } from '@apollo/client';
+import { QUERY, client } from '../../graphql';
+import { SCREEN } from "../../constants";
 const Category = (props) => {
   const { data } = props;
+  const navigation = useNavigation();
+
   return (
     <View style={styles.category} onPress={props.onPress}>
       <View style={styles.header}>
@@ -22,7 +27,7 @@ const Category = (props) => {
         />
       </View>
       <View style={styles.action}>
-        <AddButton title="Chỉnh sửa" type="edit" />
+        <AddButton title="Chỉnh sửa" type="edit" onPress={() => navigation.navigate(SCREEN.EDIT_CATEGORY, { category: data })} />
         <AddButton title="Thêm món" />
       </View>
       <View style={styles.line}></View>
