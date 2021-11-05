@@ -30,6 +30,7 @@ const InputField = (props) => {
         onFocus={onFocus}
         onBlur={onBlur}
         value={props.value}
+        keyboardType={props.keyboardType}
       />
     </View>
   );

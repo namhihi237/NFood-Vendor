@@ -49,7 +49,6 @@ export default function RegisterVendor(props) {
           },
         });
         let image1 = upload.data.secure_url || null;
-        console.log(image1);
         if (!image1) {
           Toast('Đã có lỗi thử lại!', 'danger');
           return;
