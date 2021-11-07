@@ -50,22 +50,6 @@ const EditCategory = (props) => {
       id: route.params.category._id,
       name,
     },
-    update(cache, { data: { updateCategory } }) {
-      const { getAllCategory } = cache.readQuery({
-        query: QUERY.GET_CATEGORY,
-      });
-      cache.writeQuery({
-        query: QUERY.GET_CATEGORY,
-        data: {
-          getAllCategory: getAllCategory.map((category) => {
-            if (JSON.stringify(category._id) === JSON.stringify(route.params.category._id)) {
-              return { ...category, name }
-            }
-            return category;
-          }),
-        },
-      });
-    },
     onCompleted: () => {
       Toast('Cập nhật danh mục thành công', 'success', 'top-right');
       navigation.navigate(SCREEN.MENU);

@@ -19,16 +19,6 @@ const AddCategory = (props) => {
     variables: {
       name
     },
-    // refetchQueries: [{ query: QUERY.GET_CATEGORY }],
-    update(cache, { data: { createCategory } }) {
-      const { getAllCategory } = cache.readQuery({ query: QUERY.GET_CATEGORY });
-      cache.writeQuery({
-        query: QUERY.GET_CATEGORY,
-        data: {
-          getAllCategory: [...getAllCategory, createCategory]
-        }
-      });
-    },
     onCompleted: () => {
       Toast('Tạo mới danh mục thành công', 'success', 'top-right');
       navigation.navigate(SCREEN.MENU);

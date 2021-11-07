@@ -42,22 +42,6 @@ const AddItem = (props) => {
 
 
   const [addItem, { loading: loadingAddItem }] = useMutation(MUTATION.ADD_ITEM, {
-    update(cache, { data: { createItem } }) {
-      const { getAllCategory } = cache.readQuery({ query: QUERY.GET_CATEGORY });
-
-      // add item to category and update categories
-      const newCategory = getAllCategory.map((category) => {
-        if (category._id === route.params.category._id) {
-          return { ...category, items: [...category.items, createItem] };
-        }
-        return category;
-      });
-
-      cache.writeQuery({
-        query: QUERY.GET_CATEGORY,
-        data: { getAllCategory: newCategory },
-      });
-    },
     onCompleted: () => {
       Toast('Thêm món mới thành công', 'success', 'top-right');
       navigation.goBack();
@@ -89,7 +73,7 @@ const AddItem = (props) => {
         Toast('Đã có lỗi thử lại!', 'danger');
       }
     },
-    onError:(error) => {
+    onError: (error) => {
       Toast('Đã có lỗi thử lại!', 'danger');
     }
   });

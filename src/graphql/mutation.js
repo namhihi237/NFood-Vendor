@@ -67,5 +67,17 @@ export default {
     image
     isActive
   }
-}`
+}`,
+
+  EDIT_ITEM: gql`mutation updateItem($id: ID!, $name: String, $price: Int, $description: String, $image: String) {
+    updateItem(id: $id, name: $name, price: $price, description: $description, image: $image) {
+      _id
+      name
+      description
+      image
+      price
+      isActive
+    }
+  }`
+
 }

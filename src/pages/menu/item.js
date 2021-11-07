@@ -1,6 +1,6 @@
 import React from 'react';
 import { Text, Switch, } from 'native-base';
-import { StyleSheet, View, Image } from 'react-native';
+import { StyleSheet, View, Image, TouchableOpacity } from 'react-native';
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
@@ -20,35 +20,6 @@ const Item = (props) => {
     variables: {
       id: item._id,
     },
-    update(cache, { data: { toggleItemStatus } }) {
-      const { getAllCategory } = cache.readQuery({ query: QUERY.GET_CATEGORY });
-
-      // find category has changed items and update the cache
-      let newCategory = getAllCategory.find(category => {
-        return category.items.find(item => item._id === data._id);
-      });
-
-      // change isActive in item of category to update the cache
-      newCategory.items.map(item => {
-        if (item._id === data._id) {
-          return { ...item, isActive: toggleItemStatus };
-        }
-        return item;
-      });
-
-      // update categories
-      const newCategories = getAllCategory.map(category => {
-        if (category._id === newCategory._id) {
-          return { ...category, items: newCategory.items };
-        }
-        return category;
-      });
-
-      cache.writeQuery({
-        query: QUERY.GET_CATEGORY,
-        data: { getAllCategory: newCategories },
-      });
-    },
     onError: (error) => {
       setItem({ ...item, isActive: !item.isActive });
       Toast(error.message, 'danger', 'top-right');
@@ -66,11 +37,11 @@ const Item = (props) => {
   };
 
   return (
-    <View style={styles.item} onPress={props.onPress}>
+    <View style={styles.item}>
       <View style={styles.itemContent}>
-        <View style={styles.itemContentLeft}>
+        <TouchableOpacity style={styles.itemContentLeft} onPress={() => navigation.navigate(SCREEN.EDIT_ITEM, { item })}>
           <Image source={{ uri: item?.image }} style={styles.image} />
-        </View>
+        </TouchableOpacity>
         <View style={styles.itemContentRight}>
           <View style={styles.nameAndSwitch}>
             <Text bold>{item?.name}</Text>

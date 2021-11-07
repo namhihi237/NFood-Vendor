@@ -14,17 +14,26 @@ export default function Menu(props) {
   const [isFetching, setIsFetching] = useState(false);
   const [categories, setCategories] = useState([]);
 
-  const { loading, refetch } = useQuery(QUERY.GET_CATEGORY, {
-    fetchPolicy: "cache-and-network",
-    onCompleted: (data) => {
-      setCategories(data.getAllCategory);
-      console.log(data.getAllCategory);
-    }
+  const [getData, { data }] = useLazyQuery(QUERY.GET_CATEGORY, {
+    fetchPolicy: "no-cache",
   });
 
+  useEffect(() => {
+    getData();
+
+  }, [categories]);
+
+  useEffect(() => {
+    const unsubscribe = navigation.addListener('focus', () => {
+      getData();
+    });
+    return unsubscribe;
+  }, [navigation]);
+
+
   const renderCategories = () => {
-    if (categories.length != 0) {
-      return categories.map((item, index) => {
+    if (data) {
+      return data.getAllCategory.map((item, index) => {
         return <Category key={index} data={item} onToggle={() => {
           toggleCategory({ variables: { id: item._id } });
           updateCategory(item);
@@ -43,7 +52,7 @@ export default function Menu(props) {
   });
 
   const updateCategory = (item) => {
-    let newCategories = categories.map(category => {
+    let newCategories = data.getAllCategory.map(category => {
       if (category._id == item._id) {
         return { ...category, isActive: !category.isActive };
       }
@@ -58,7 +67,7 @@ export default function Menu(props) {
       <View style={{ backgroundColor: "#fff", height: 100, paddingTop: 30, paddingHorizontal: wp('5%') }}>
         <AddButton title="Tạo danh mục" onPress={() => navigation.navigate(SCREEN.ADD_CATEGORY)} />
       </View>
-      {renderCategories()}
+      {data ? renderCategories() : null}
     </ScrollView >
   );
 
@@ -66,13 +75,13 @@ export default function Menu(props) {
   const navigation = useNavigation();
   return (
     <View style={{ paddingBottom: hp('7%'), }}>
-      <Loading status={loading} />
+      {/* <Loading status={loading} /> */}
       <HeaderBack title="Menu" button={"Lưu"} />
       <FlatList
         data={[1]}
         renderItem={() => renderItem()}
         refreshing={isFetching}
-        onRefresh={() => refetch()}
+        onRefresh={() => getData()}
       />
     </View>
 
