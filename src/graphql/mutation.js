@@ -78,6 +78,10 @@ export default {
       price
       isActive
     }
-  }`
+  }`,
+
+  DELETE_ITEM: gql`mutation deleteItem($id: ID!) {
+    deleteItem(id: $id)
+  }`,
 
 }

@@ -23,19 +23,6 @@ const EditCategory = (props) => {
     variables: {
       id: route.params.category._id,
     },
-    update(cache, { data: { deleteCategory } }) {
-      const { getAllCategory } = cache.readQuery({
-        query: QUERY.GET_CATEGORY,
-      });
-      cache.writeQuery({
-        query: QUERY.GET_CATEGORY,
-        data: {
-          getAllCategory: getAllCategory.filter(
-            (category) => JSON.stringify(category._id) !== JSON.stringify(route.params.category._id),
-          ),
-        },
-      });
-    },
     onCompleted: () => {
       Toast('Xóa danh mục thành công', 'success', 'top-right');
       navigation.navigate(SCREEN.MENU);
@@ -78,12 +65,12 @@ const EditCategory = (props) => {
         <View>
           <Text>Tên danh mục</Text>
           <InputField placeholder="Tên danh mục..." onChangeText={(text) => props.onChangeText(text)} width="90%" onChangeText={onChangeName} value={name} />
-          <View style={styles.deleteIcon}>
-            <TouchableOpacity onPress={() => setModalVisible(!modalVisible)}>
+          <TouchableOpacity style={styles.deleteIcon} onPress={() => setModalVisible(!modalVisible)}>
+            <View >
               <FontAwesome5 name="trash-alt" size={20} color="red" />
-            </TouchableOpacity>
+            </View>
             <Text style={styles.deleteText} italic>Xóa danh mục này</Text>
-          </View>
+          </TouchableOpacity>
         </View>
         <ButtonCustom title="Cập nhật" height="6%" width="90%" onPress={editCategory} />
       </View>

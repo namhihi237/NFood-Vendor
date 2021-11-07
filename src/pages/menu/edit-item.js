@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text, Switch } from 'native-base';
+import { Text, Button, Modal } from 'native-base';
 import { StyleSheet, View, ScrollView, Image, TouchableOpacity } from 'react-native';
 import {
   widthPercentageToDP as wp,
@@ -14,6 +14,8 @@ import { SCREEN } from '../../constants';
 import * as ImagePicker from 'react-native-image-picker';
 import axios from 'axios';
 import { createFormData } from '../../utils';
+import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
+
 const EditItem = (props) => {
   const navigation = useNavigation();
   const route = useRoute();
@@ -22,6 +24,8 @@ const EditItem = (props) => {
   const [price, setPrice] = React.useState(route.params.item.price.toString());
   const [description, setDescription] = React.useState(route.params.item.description);
   const [loadingImage, setLoadingImage] = React.useState(false);
+  const [modalVisible, setModalVisible] = React.useState(false)
+
 
   const onChangeName = (name) => setName(name);
   const onChangePrice = (price) => setPrice(price);
@@ -95,12 +99,25 @@ const EditItem = (props) => {
     editItem({ variables: { id: route.params.item._id, name, price: parseFloat(price), description } });
   };
 
+  const [deleteItem, { loading }] = useMutation(MUTATION.DELETE_ITEM, {
+    variables: {
+      id: route.params.item._id,
+    },
+    onCompleted: () => {
+      Toast('Xóa món ăn thành công', 'success', 'top-right');
+      navigation.navigate(SCREEN.MENU);
+    },
+    onError: (error) => {
+      Toast(error.message, 'danger', 'top-right');
+    }
+  });
+
 
   return (
     <ScrollView style={styles.container} contentInsetAdjustmentBehavior="automatic"
       showsVerticalScrollIndicator={false} >
       <HeaderBack title="Sửa thông tin món ăn" />
-      <Loading status={editItemLoading || loadingUploadImage || loadingImage} />
+      <Loading status={editItemLoading || loadingUploadImage || loadingImage || loading} />
       <View style={styles.content}>
         <View>
           <Text>Tên món ăn (*)</Text>
@@ -134,8 +151,41 @@ const EditItem = (props) => {
             </TouchableOpacity>
           </View>
         </View>
+
+        <TouchableOpacity style={styles.deleteIcon} onPress={() => setModalVisible(!modalVisible)}>
+          <View >
+            <FontAwesome5 name="trash-alt" size={20} color="red" />
+          </View>
+          <Text style={styles.deleteText} italic>Xóa danh mục này</Text>
+        </TouchableOpacity>
         <ButtonCustom title="Lưu thay đổi" height="6%" width="90%" onPress={updateItem} />
       </View>
+      <Modal
+        isOpen={modalVisible}
+        onClose={() => setModalVisible(false)}
+        closeOnOverlayClick={false}
+      >
+        <Modal.Content>
+          <Modal.CloseButton />
+          <Modal.Header>Xóa món ăn</Modal.Header>
+          <Modal.Body>
+            <Text>Nếu bạn xóa món ăn này sẽ không thể lấy lại được lại được. Vấn tiếp tục!</Text>
+          </Modal.Body>
+          <Modal.Footer>
+            <Button.Group space={2}>
+              <Button variant="ghost" colorScheme="blueGray" onPress={() => setModalVisible(false)}>Hủy</Button>
+              <Button
+                onPress={() => {
+                  setModalVisible(false);
+                  deleteItem();
+                }}
+              >
+                Xóa
+              </Button>
+            </Button.Group>
+          </Modal.Footer>
+        </Modal.Content>
+      </Modal>
     </ScrollView >
   );
 };
@@ -153,4 +203,13 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     height: hp('85%'),
   },
+  deleteIcon: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginTop: 10,
+  },
+  deleteText: {
+    marginLeft: 6,
+    color: '#a4a4a4a4'
+  }
 });
