@@ -55,7 +55,7 @@ export default {
     toggleItemStatus(id: $id)
   }`,
 
-  ADD_ITEM: gql`mutation createItem($name: String!, $price: Int!, $image: String!, $categoryId: ID!, $description: String) {
+  ADD_ITEM: gql`mutation createItem($name: String!, $price: Float!, $image: String!, $categoryId: ID!, $description: String) {
   createItem(name: $name, price: $price, image: $image, categoryId: $categoryId, description: $description) {
     _id
     name
@@ -69,7 +69,7 @@ export default {
   }
 }`,
 
-  EDIT_ITEM: gql`mutation updateItem($id: ID!, $name: String, $price: Int, $description: String, $image: String) {
+  EDIT_ITEM: gql`mutation updateItem($id: ID!, $name: String, $price: Float, $description: String, $image: String) {
     updateItem(id: $id, name: $name, price: $price, description: $description, image: $image) {
       _id
       name
