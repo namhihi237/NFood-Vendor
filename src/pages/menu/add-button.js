@@ -10,7 +10,7 @@ const AddButton = (props) => {
   const icon = props.type === 'edit' ? 'edit' : 'plus';
   return (
     <TouchableOpacity style={styles.btn} onPress={props.onPress}>
-      <FontAwesome5 name={icon} size={wp('4%')} color="#000" />
+      <FontAwesome5 name={icon} size={wp('4%')} color="#F24F04" />
       <Text fontSize="md" style={styles.text}>{props.title}</Text>
     </TouchableOpacity>
   );
@@ -27,9 +27,9 @@ const styles = StyleSheet.create({
     justifyContent: 'space-around',
     paddingHorizontal: 10,
     borderWidth: 1,
-    borderColor: '#A4A4A4',
+    borderColor: '#F24F04',
   },
   text: {
-    color: '#000',
+    color: '#F24F04',
   },
 });
