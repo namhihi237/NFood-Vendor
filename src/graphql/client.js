@@ -4,7 +4,7 @@ import { setContext } from '@apollo/client/link/context';
 import { storageUtils } from '../utils';
 
 const httpLink = createHttpLink({
-  uri: 'https://nfoodfast.herokuapp.com/api/v1/graphql',
+  uri: 'https://nfood-api.southeastasia.cloudapp.azure.com/api/v1/graphql',
 });
 
 const authLink = setContext(async (_, { headers }) => {

@@ -16,4 +16,5 @@ export default {
   EDIT_CATEGORY: 'editCategory',
   ADD_ITEM: 'addItem',
   EDIT_ITEM: 'editItem',
+  AUTH_PHONE: 'authPhone',
 }

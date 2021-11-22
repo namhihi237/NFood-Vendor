@@ -6,6 +6,7 @@ import Manager from "./manager";
 import Notification from "./notification";
 import Store from "./store";
 import { Menu, AddCategory, EditCategory, AddItem, EditItem } from './menu';
+import AuthPhone from "./auth-phone";
 
 export {
   Register,
@@ -20,5 +21,6 @@ export {
   AddCategory,
   EditCategory,
   AddItem,
-  EditItem
+  EditItem,
+  AuthPhone
 };

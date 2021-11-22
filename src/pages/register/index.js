@@ -24,7 +24,7 @@ export default function Register(props) {
       role: "vendor"
     },
     onCompleted: (data) => {
-      navigation.navigate(SCREEN.LOGIN);
+      navigation.navigate(SCREEN.AUTH_PHONE, {phoneNumber});
     },
     onError: (error) => {
       Toast(error.message, 'error');
@@ -46,7 +46,7 @@ export default function Register(props) {
       contentInsetAdjustmentBehavior="automatic"
       showsVerticalScrollIndicator={false}
     >
-      <Loading status={loading} message={'Đămg ký'} />
+      <Loading status={loading} message={'Đăng ký'} />
       < View style={styles.mainContainer} >
         <Text fontSize="3xl" bold style={styles.title}>Đăng Ký tài khoản</Text>
         <InputField
@@ -121,7 +121,7 @@ const styles = StyleSheet.create({
 
   },
   textLink: {
-    color: '#36AFDC',
+    color: '#F24F04',
     marginLeft: wp('2%'),
   }
 

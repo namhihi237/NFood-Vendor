@@ -56,18 +56,18 @@ export default {
   }`,
 
   ADD_ITEM: gql`mutation createItem($name: String!, $price: Float!, $image: String!, $categoryId: ID!, $description: String) {
-  createItem(name: $name, price: $price, image: $image, categoryId: $categoryId, description: $description) {
-    _id
-    name
-    price
-    category {
+    createItem(name: $name, price: $price, image: $image, categoryId: $categoryId, description: $description) {
+      _id
       name
+      price
+      category {
+        name
+      }
+      description
+      image
+      isActive
     }
-    description
-    image
-    isActive
-  }
-}`,
+  }`,
 
   EDIT_ITEM: gql`mutation updateItem($id: ID!, $name: String, $price: Float, $description: String, $image: String) {
     updateItem(id: $id, name: $name, price: $price, description: $description, image: $image) {
@@ -82,6 +82,19 @@ export default {
 
   DELETE_ITEM: gql`mutation deleteItem($id: ID!) {
     deleteItem(id: $id)
+  }`,
+
+  RESEND_CODE: gql`mutation GetCodePhoneNumber($phoneNumber: String!) {
+    getCodePhoneNumber(phoneNumber: $phoneNumber)
+  }`,
+
+  ACTIVE_PHONE_NUMBER: gql`mutation ActivePhoneNumber($phoneNumber: String!, $code: String!) {
+    activePhoneNumber(phoneNumber: $phoneNumber, code: $code) {
+      token
+      user {
+      name  
+      }
+    }
   }`,
 
 }
