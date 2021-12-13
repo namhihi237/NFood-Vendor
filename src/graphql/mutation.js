@@ -101,4 +101,8 @@ export default {
     resetNumberOfNotifications(userType: $userType)
   }`,
 
+  UPDATE_STATUS_RECEIVE_ORDER: gql`mutation updateStatusReceiveOrder {
+    updateStatusReceiveOrder
+  }`
+
 }

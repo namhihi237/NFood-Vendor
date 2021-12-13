@@ -16,6 +16,7 @@ export default {
       isShipper
       coordinates
       name
+      isReceiveOrder
     }
   }`,
 
