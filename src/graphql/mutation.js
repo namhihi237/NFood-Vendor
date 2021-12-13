@@ -97,4 +97,8 @@ export default {
     }
   }`,
 
+  RESET_NUMBER_OF_NOTIFICATIONS: gql`mutation ResetNumberOfNotifications($userType: roleEnum!) {
+    resetNumberOfNotifications(userType: $userType)
+  }`,
+
 }

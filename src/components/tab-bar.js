@@ -6,10 +6,42 @@ import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
-
+import { SUBSCRIPTION, QUERY, MUTATION } from "../graphql";
+import { useQuery, useMutation, useSubscription } from '@apollo/client';
+import { SCREEN } from '../constants';
 const TabBar = ({ state, descriptors, navigation }) => {
 
   const [count, setCount] = React.useState(0);
+
+  const { data } = useSubscription(SUBSCRIPTION.GET_NUMBER_OF_NOTIFICATIONS, {
+    variables: {
+      userType: 'vendor'
+    },
+    onSubscriptionData: ({ client, subscriptionData }) => {
+      setCount(subscriptionData.data.numberOfNotifications)
+    },
+  });
+
+  useQuery(QUERY.GET_NUMBER_OF_NOTIFICATIONS, {
+    fetchPolicy: 'network-only',
+    variables: {
+      userType: 'vendor'
+    },
+    onCompleted: (data) => {
+      setCount(data.getNumberOfNotifications)
+    }
+  });
+
+  const [resetNumberOfNotifications] = useMutation(MUTATION.RESET_NUMBER_OF_NOTIFICATIONS, {
+    variables: {
+      userType: 'vendor'
+    },
+    onCompleted: (data) => {
+      setCount(0)
+    }
+  });
+
+
 
   return (
     <View style={styles.container}>
@@ -26,8 +58,8 @@ const TabBar = ({ state, descriptors, navigation }) => {
           if (!isFocused && !event.defaultPrevented) {
             navigation.navigate(route.name);
           }
-          if (route.name === 'Notification') {
-
+          if (route.name === SCREEN.NOTIFICATION) {
+            resetNumberOfNotifications();
           }
         };
 
@@ -60,7 +92,7 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
     backgroundColor: '#1C1D26',
-    height: hp('7%'),
+    height: hp('6%'),
     justifyContent: 'center',
     alignItems: 'center',
     shadowColor: '#000',
@@ -74,7 +106,7 @@ const styles = StyleSheet.create({
     width: wp('100%'),
   },
   icon: {
-    fontSize: 25,
+    fontSize: 22,
     color: '#E5512F',
   },
   button: {
@@ -97,8 +129,8 @@ const styles = StyleSheet.create({
   noFocus: {
     alignItems: 'center',
     justifyContent: 'center',
-    height: 50,
-    width: 50,
+    height: 40,
+    width: 40,
   },
 });
 export default TabBar;
