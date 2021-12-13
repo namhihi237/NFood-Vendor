@@ -40,7 +40,6 @@ const AddItem = (props) => {
     });
   };
 
-
   const [addItem, { loading: loadingAddItem }] = useMutation(MUTATION.ADD_ITEM, {
     onCompleted: () => {
       Toast('Thêm món mới thành công', 'success', 'top-right');
