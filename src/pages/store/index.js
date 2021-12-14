@@ -5,7 +5,7 @@ import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-nat
 import { useNavigation } from '@react-navigation/native';
 import { useMutation, useQuery } from '@apollo/client';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
-import { InputField, ButtonCustom, Toast, Loading } from '../../components';
+import { InputField, ButtonCustom, Toast, Header } from '../../components';
 import { SCREEN } from "../../constants";
 import Info from './info';
 import { QUERY, client } from '../../graphql';
@@ -24,6 +24,7 @@ export default function Store(props) {
   const navigation = useNavigation();
   return (
     <View style={styles.mainContainer}>
+      <Header title={"Cửa hàng"} />
       <View style={styles.infoContainer}>
         <Image source={{ uri: getUser ? getUser?.image : null }} style={styles.avatar} />
         <View>

@@ -83,7 +83,7 @@ export default function NewOrder(props) {
                 <Text color="#fff">0989898989</Text>
               </View>
             </View>
-            <View bg="#fff" alignItems="center" justifyContent="center" pl="3" pr="3" h="45%" rounded="xl">
+            <View bg="#fff" alignItems="center" justifyContent="center" pl="3" pr="3" h="40%" rounded="xl">
               <TouchableOpacity>
                 <Text color="#F24F04" bold>Gọi shipper</Text>
               </TouchableOpacity>

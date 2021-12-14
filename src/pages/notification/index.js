@@ -3,7 +3,7 @@ import React from "react";
 import { StyleSheet, StatusBar, Image, TouchableOpacity, FlatList } from 'react-native';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import { SCREEN } from "../../constants";
-import { Header, ButtonCustom, Toast } from "../../components";
+import { Header, Toast } from "../../components";
 import { useRoute, useNavigation } from "@react-navigation/native";
 import { useQuery, useMutation } from '@apollo/client';
 import { QUERY, MUTATION } from "../../graphql";
@@ -21,12 +21,6 @@ export default function Notification(props) {
       limit: 100
     },
     fetchPolicy: 'network-only',
-    onCompleted: (data) => {
-      console.log('data', data);
-    },
-    onError: (error) => {
-      console.log('error', error);
-    }
   });
 
   React.useEffect(() => {
@@ -40,7 +34,7 @@ export default function Notification(props) {
     return (
       <TouchableOpacity >
         <View style={{ flexDirection: 'row', backgroundColor: '#fff', paddingTop: 10 }}>
-          <Image source={require('../../../assets/images/no-order.png')} style={{ width: wp('20%'), height: wp('20%'), marginLeft: wp('4%') }} />
+          <Image source={require('../../../assets/images/no-order.png')} style={{ width: wp('15%'), height: wp('15%'), marginLeft: wp('4%') }} />
           <View style={{ marginRight: 10, paddingRight: wp('24%') }}>
             <Text style={{ fontSize: wp('3.4%'), marginTop: hp('1%') }}>{item.content}</Text>
             <View style={{ justifyContent: 'flex-end', flexDirection: 'row', marginTop: 5 }}>
@@ -55,6 +49,7 @@ export default function Notification(props) {
 
   return (
     <View style={styles.container} >
+      <Header title={"Thông báo"} />
       {
         data && data.getNotifications && data.getNotifications.items.length > 0 ? (<FlatList
           data={data ? data.getNotifications.items : []}
