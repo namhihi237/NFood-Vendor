@@ -51,4 +51,38 @@ export default {
   GET_NUMBER_OF_NOTIFICATIONS: gql`query Query($userType: roleEnum!) {
     getNumberOfNotifications(userType: $userType)
   }`,
+
+  GET_ORDERS: gql`query GetOrderByVendor {
+    getOrderByVendor {
+      _id
+      invoiceNumber
+      subTotal
+      shipping
+      discount
+      total
+      orderItems {
+        _id
+        price
+        quantity
+        name
+        image
+        note
+      }
+      address
+      phoneNumber
+      name
+      acceptedShippingAt
+      estimatedDeliveryTime
+      paymentStatus
+      orderStatus
+      createdAt
+      shipper {
+        _id
+        name
+        phoneNumber
+        image
+      }
+      paymentMethod
+    }
+  }`
 };

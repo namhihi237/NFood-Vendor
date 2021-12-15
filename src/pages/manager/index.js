@@ -1,13 +1,15 @@
 import { Text, Box, View, Pressable, StatusBar, Center } from "native-base";
 import React, { useEffect, useState } from 'react';
-import { StyleSheet, TouchableOpacity, Dimensions, Image } from 'react-native';
+import { StyleSheet, TouchableOpacity, Dimensions, Image, FlatList } from 'react-native';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import { useNavigation, useRoute } from '@react-navigation/native';
-import { useMutation } from '@apollo/client';
+import { useMutation, useQuery } from '@apollo/client';
 import { TabView, SceneMap } from 'react-native-tab-view';
 
 import { InputField, ButtonCustom, Toast, Header } from '../../components';
 import { SCREEN } from "../../constants"
+import Order from './order';
+import { QUERY } from "../../graphql";
 
 const FirstRoute = () => <Center flex={1}><Image source={require('../../../assets/images/no-order.png')} style={{ width: wp('50%'), height: wp('55%') }} /></Center>
 const SecondRoute = () => <Center flex={1}><Image source={require('../../../assets/images/no-order.png')} style={{ width: wp('50%'), height: wp('55%') }} /></Center>
@@ -23,11 +25,39 @@ export default function Manager(props) {
     { key: 'turnover', title: 'Doanh thu' },
   ]);
 
+  const { data, refetch } = useQuery(QUERY.GET_ORDERS);
+
+  React.useEffect(() => {
+    navigation.addListener('focus', () => {
+      refetch();
+    });
+  }, []);
+
+  const renderItems = (order) => {
+    return (<Order order={order} onPress={() => {
+    }} />);
+  }
+
+  const renderTabOrders = () => {
+    if (data) {
+      return <FlatList
+        style={{ paddingBottom: 10 }}
+        data={data.getOrderByVendor}
+        renderItem={({ item }) => renderItems(item)}
+        keyExtractor={(item, index) => item._id}
+      />
+    }
+    return <Center flex={1}><Image source={require('../../../assets/images/no-order.png')} style={{ width: wp('50%'), height: wp('55%') }} /></Center>
+  }
+
+  const renderOrder = () => renderTabOrders();
 
   const renderScene = SceneMap({
-    orders: FirstRoute,
+    orders: renderOrder,
     turnover: SecondRoute,
   });
+
+
 
   const renderTabBar = (props) => {
     return (
@@ -69,7 +99,6 @@ export default function Manager(props) {
 
 const styles = StyleSheet.create({
   mainContainer: {
-    backgroundColor: '#fff',
     flex: 1,
     display: 'flex',
   },
