@@ -9,7 +9,7 @@ import {
 } from 'react-native-responsive-screen';
 
 const Order = (props) => {
-  const { order } = props;
+  const { order, index } = props;
 
   const countNumberOfItems = (orderItems) => {
     let count = 0;
@@ -19,9 +19,11 @@ const Order = (props) => {
     return count;
   }
 
+  const marginTop = index === 0 ? hp('2%') : 0;
+
   return (
     <TouchableWithoutFeedback onPress={props.onPress} >
-      <View style={styles.container} shadow={3}>
+      <View style={{ ...styles.container, marginTop }} shadow={3}>
         <View style={{ paddingHorizontal: wp('5%'), paddingVertical: 10 }} flexDirection='row'>
           <View ml='2'>
             <View mt='1' style={{ flexDirection: 'row', justifyContent: 'space-between', width: wp('75%') }} alignItems='center'>
@@ -53,6 +55,6 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: '#fff',
     marginHorizontal: wp('5%'),
-    marginTop: hp('2%'),
+    marginBottom: hp('2%'),
   }
 })

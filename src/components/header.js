@@ -27,7 +27,7 @@ const Header = (props) => {
 
       }}>
         <View>
-          <FontAwesome5 name="bell" size={wp('5%')} color="white" style={styles.icon || 'home'} />
+          <FontAwesome5 name="bell" size={wp('5%')} color="white" style={styles.icon} onPress={() => navigation.navigate(SCREEN.NOTIFICATION)} />
         </View>
       </TouchableWithoutFeedback>
     </View>

@@ -33,8 +33,9 @@ export default function Manager(props) {
     });
   }, []);
 
-  const renderItems = (order) => {
-    return (<Order order={order} onPress={() => {
+  const renderItems = (order, index) => {
+    return (<Order order={order} index={index} onPress={() => {
+      navigation.navigate(SCREEN.ORDER_DETAIL, { order });
     }} />);
   }
 
@@ -43,7 +44,7 @@ export default function Manager(props) {
       return <FlatList
         style={{ paddingBottom: 10 }}
         data={data.getOrderByVendor}
-        renderItem={({ item }) => renderItems(item)}
+        renderItem={({ item, index }) => renderItems(item, index)}
         keyExtractor={(item, index) => item._id}
       />
     }

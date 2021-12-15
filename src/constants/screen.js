@@ -17,4 +17,5 @@ export default {
   ADD_ITEM: 'addItem',
   EDIT_ITEM: 'editItem',
   AUTH_PHONE: 'authPhone',
+  ORDER_DETAIL: 'orderDetail',
 }
