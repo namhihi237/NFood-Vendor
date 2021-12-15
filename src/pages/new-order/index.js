@@ -30,11 +30,9 @@ export default function NewOrder(props) {
     },
   });
 
-  const navigation = useNavigation();
-  return (
-    <View style={styles.mainContainer}>
-      <Header title={"Đơn hàng mới"} />
-      <View style={{}}>
+  const renderNewOrder = () => {
+    return (
+      <View>
         <View style={styles.receiveOrder}>
           <Text fontSize="lg">Sẵn sàng nhận đơn</Text>
           <Switch
@@ -105,21 +103,26 @@ export default function NewOrder(props) {
                 <Text color="#fff">x2</Text>
               </Center>
             </HStack>
-            <HStack>
-              <View h="10" bg="#D7D9DB" flex="4" justifyContent="center" style={{ paddingHorizontal: wp('5%') }}>
-                <Text >Banh beo</Text>
-              </View>
-              <Center h="10" bg="#959BA4" flex="1" >
-                <Text color="#fff">x3</Text>
-              </Center>
-            </HStack>
           </Stack>
           <View style={styles.total}>
             <Text bold fontSize="md">Tiền thu từ shipper</Text>
             <Text bold fontSize="md" color="#ff0000">{moneyUtils.convertVNDToString(120000)} đ</Text>
           </View>
+          <ButtonCustom>
+            <Text>Bắt đầu lám</Text>
+          </ButtonCustom>
         </View>
       </View>
+    )
+  }
+
+  const navigation = useNavigation();
+  return (
+    <View style={styles.mainContainer}>
+      <Header title={"Đơn hàng mới"} />
+      <ScrollView style={{}}>
+        {renderNewOrder()}
+      </ScrollView>
     </View>
   );
 }
@@ -137,6 +140,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     marginTop: 5,
     paddingTop: 10,
+
   },
   card: {
     borderWidth: 1,
