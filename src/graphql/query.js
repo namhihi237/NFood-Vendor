@@ -76,6 +76,11 @@ export default {
       paymentStatus
       orderStatus
       createdAt
+      buyer {
+        name
+        image
+        phoneNumber
+      }
       shipper {
         _id
         name

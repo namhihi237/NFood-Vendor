@@ -1,6 +1,6 @@
 import { Text, HStack, VStack, View, Switch, Stack, Center } from "native-base";
 import React, { useEffect, useState } from 'react';
-import { StyleSheet, TouchableOpacity, ScrollView, Image } from 'react-native';
+import { StyleSheet, TouchableOpacity, ScrollView, Image, Linking } from 'react-native';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import { useNavigation } from '@react-navigation/native';
 import { useMutation, useQuery } from '@apollo/client';
@@ -12,6 +12,7 @@ import { moneyUtils, orderUtils, timeUtils } from "../../utils";
 
 export default function OrderDetail(props) {
   const order = props.route.params.order;
+  const noImage = 'https://res.cloudinary.com/do-an-cnpm/image/upload/v1637807216/user_ilxv1x.png';
   const navigation = useNavigation();
 
   const renderNumberOfOrders = (items) => {
@@ -20,19 +21,25 @@ export default function OrderDetail(props) {
     }, 0);
   }
 
+  const callPhone = (phone) => {
+    // remove + 
+    const phoneNumber = phone.replace(/\+84/g, '0');
+    Linking.openURL(`tel:${phoneNumber}`);
+  }
+
   return (
     <View style={styles.mainContainer}>
       <Header title={`#${order.invoiceNumber}`} icon="arrow-left" onPress={() => navigation.goBack()} />
       <ScrollView >
         <View style={styles.shipper}>
           <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-            <Image source={{ uri: order?.shipper?.image }} style={styles.shipperImage} />
+            <Image source={{ uri: order?.buyer?.image || noImage }} style={styles.shipperImage} />
             <View>
-              <Text bold>{order?.shipper?.name}</Text>
-              <Text >{"0983748473738"}</Text>
+              <Text bold>{order?.buyer?.name}</Text>
+              <Text >{order?.buyer?.phoneNumber}</Text>
             </View>
           </View>
-          <TouchableOpacity>
+          <TouchableOpacity onPress={() => callPhone(order?.buyer?.phoneNumber)}>
             <FontAwesome5 name="phone-alt" size={wp('8%')} color="#16a34a" />
           </TouchableOpacity>
         </View>
@@ -56,12 +63,12 @@ export default function OrderDetail(props) {
           <View style={{ flexDirection: 'row', alignItems: 'center' }}>
             <Image source={{ uri: order?.shipper?.image }} style={styles.shipperImage} />
             <View>
-              <Text bold>Tài xế lấy hàng</Text>
+              <Text bold>Người giao hàng</Text>
               <Text bold>{order?.shipper?.name}</Text>
               <Text >{"0983748473738"}</Text>
             </View>
           </View>
-          <TouchableOpacity>
+          <TouchableOpacity onPress={() => callPhone(order?.shipper?.phoneNumber)}>
             <FontAwesome5 name="phone-alt" size={wp('8%')} color="#16a34a" />
           </TouchableOpacity>
         </View>
