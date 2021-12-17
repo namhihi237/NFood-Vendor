@@ -13,7 +13,9 @@ import {
   AddItem,
   EditItem,
   AuthPhone,
-  OrderDetail
+  OrderDetail,
+  Vouchers,
+  AddVoucher
 } from '../pages';
 
 import Tab from './tab';
@@ -53,6 +55,8 @@ const Navigation = () => {
         <Stack.Screen name={SCREEN.EDIT_ITEM} component={EditItem} />
         <Stack.Screen name={SCREEN.AUTH_PHONE} component={AuthPhone} />
         <Stack.Screen name={SCREEN.ORDER_DETAIL} component={OrderDetail} />
+        <Stack.Screen name={SCREEN.VOUCHERS} component={Vouchers} />
+        <Stack.Screen name={SCREEN.ADD_VOUCHER} component={AddVoucher} />
 
       </Stack.Navigator>
     </NavigationContainer>

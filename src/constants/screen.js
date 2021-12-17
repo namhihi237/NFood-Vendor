@@ -18,4 +18,6 @@ export default {
   EDIT_ITEM: 'editItem',
   AUTH_PHONE: 'authPhone',
   ORDER_DETAIL: 'orderDetail',
+  VOUCHERS: 'vouchers',
+  ADD_VOUCHER: 'addVoucher',
 }

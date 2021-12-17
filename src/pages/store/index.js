@@ -33,7 +33,7 @@ export default function Store(props) {
         </View>
       </View>
       <View>
-        <TouchableOpacity style={styles.card}>
+        <TouchableOpacity style={styles.card} onPress={() => navigation.navigate(SCREEN.VOUCHERS)}>
           <Text style={styles.title}>Quản lý khuyến mãi</Text>
           <FontAwesome5 name="arrow-right" size={20} color="#A4A4A4" />
         </TouchableOpacity>
