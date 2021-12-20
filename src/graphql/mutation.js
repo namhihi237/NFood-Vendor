@@ -103,6 +103,19 @@ export default {
 
   UPDATE_STATUS_RECEIVE_ORDER: gql`mutation updateStatusReceiveOrder {
     updateStatusReceiveOrder
+  }`,
+
+  ADD_VOUCHER: gql`mutation CreateVoucher($inputVoucher: inputVoucher!) {
+    createVoucher(inputVoucher: $inputVoucher) {
+      _id
+      discount
+      status
+      quantity
+      discountType
+      endDate
+      startDate
+      promoCode
+    }
   }`
 
 }
