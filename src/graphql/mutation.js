@@ -116,6 +116,10 @@ export default {
       startDate
       promoCode
     }
+  }`,
+
+  TOGGLE_STATUS_VOUCHER: gql`mutation ToggleVoucherStatus($id: ID!) {
+    toggleVoucherStatus(id: $id)
   }`
 
 }

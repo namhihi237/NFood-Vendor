@@ -18,6 +18,23 @@ export default function Vouchers(props) {
     fetchPolicy: 'cache-and-network',
   });
 
+  const [toggleStatusVoucher] = useMutation(MUTATION.TOGGLE_STATUS_VOUCHER, {
+    onError: err => {
+      Toast(err.message, 'danger', 'top-right');
+    },
+    onCompleted: data => {
+      refetch();
+    }
+  });
+
+  const handleToggleStatusVoucher = async (id) => {
+    toggleStatusVoucher({
+      variables: {
+        id
+      }
+    })
+  }
+
   React.useEffect(() => {
     navigation.addListener('focus', () => {
       refetch();
@@ -60,7 +77,7 @@ export default function Vouchers(props) {
             size="md"
             isChecked={item.status}
             onToggle={() => {
-              // updateStatusReceiveOrder()
+              handleToggleStatusVoucher(item._id)
             }}
           />
         </View>
