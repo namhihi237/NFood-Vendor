@@ -1,4 +1,4 @@
-import { Text, Pressable, View, Box, Center, Fab } from "native-base";
+import { Text, Switch, View, Box, Center, Fab } from "native-base";
 import React from "react";
 import { StyleSheet, StatusBar, Image, TouchableOpacity, FlatList } from 'react-native';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
@@ -14,23 +14,81 @@ export default function Vouchers(props) {
   const navigation = useNavigation();
   const route = useRoute();
 
+  const { data, refetch } = useQuery(QUERY.GET_VOUCHERS, {
+    fetchPolicy: 'cache-and-network',
+  });
+
   React.useEffect(() => {
     navigation.addListener('focus', () => {
+      refetch();
     });
   }, []);
+
+  const renderTypeDiscount = (discountType) => {
+    switch (discountType) {
+      case 'PERCENT':
+        return 'Phần trăm';
+      case 'FIXED':
+        return 'Tiền';
+      default:
+        return '';
+    }
+  }
+
+  const renderDiscount = (item) => {
+    switch (item.discountType) {
+      case 'PERCENT':
+        return `${item.discount} %`;
+      case 'FIXED':
+        return `${item.discount} đ`;
+      default:
+        return '';
+    }
+  }
 
 
   const renderItem = (item) => {
     return (
-      <TouchableOpacity >
+      <View style={{ marginHorizontal: wp('2%'), paddingHorizontal: wp('3%') }} bg="#fff" mt="2" mb="1" pt="2" pb="2" shadow={1} rounded={4}>
+        <View justifyContent="space-between" flexDirection="row">
+          <Text bold fontSize="xl">{item.promoCode}</Text>
+          <Switch
+            offTrackColor="tertiary.100"
+            onTrackColor="tertiary.200"
+            onThumbColor="tertiary.500"
+            offThumbColor="tertiary.50"
+            size="md"
+            isChecked={item.status}
+            onToggle={() => {
+              // updateStatusReceiveOrder()
+            }}
+          />
+        </View>
+        <View flexDirection="row" justifyContent="space-between">
+          <Text italic>Loại mã</Text>
+          <Text>{renderTypeDiscount(item.discountType)}</Text>
+        </View>
+        <View flexDirection="row" justifyContent="space-between">
+          <Text italic>Giảm giá</Text>
+          <Text>{renderDiscount(item)}</Text>
+        </View>
 
-      </TouchableOpacity>
+        <View flexDirection="row" justifyContent="space-between">
+          <Text italic>Thời gian tạo</Text>
+          <Text color="#4f4f4f4f">{timeUtils.convertFullTime(new Date(item.createdAt - 0))}</Text>
+        </View>
+      </View>
     )
   }
 
   return (
     <View style={styles.container} >
       <Header title={"Quản lý mã khuyến mãi"} icon="arrow-left" onPress={() => navigation.goBack()} />
+      <FlatList
+        data={data?.getVouchers}
+        renderItem={({ item }) => renderItem(item)}
+        keyExtractor={(item, index) => item._id}
+      />
       <Fab
         position="absolute"
         size="sm"

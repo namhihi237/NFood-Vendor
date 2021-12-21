@@ -89,5 +89,19 @@ export default {
       }
       paymentMethod
     }
+  }`,
+
+  GET_VOUCHERS: gql`query GetVouchers {
+    getVouchers {
+      _id
+      discount
+      status
+      quantity
+      discountType
+      promoCode
+      startDate
+      endDate
+      createdAt
+    }
   }`
 };
