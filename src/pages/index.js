@@ -8,7 +8,7 @@ import Store from "./store";
 import { Menu, AddCategory, EditCategory, AddItem, EditItem } from './menu';
 import AuthPhone from "./auth-phone";
 import OrderDetail from "./order-detail";
-import { Vouchers, AddVoucher } from './voucher';
+import { Vouchers, AddVoucher, UpdateVoucher } from './voucher';
 export {
   Register,
   Login,
@@ -26,5 +26,6 @@ export {
   AuthPhone,
   OrderDetail,
   Vouchers,
-  AddVoucher
+  AddVoucher,
+  UpdateVoucher
 };

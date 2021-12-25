@@ -169,7 +169,7 @@ const EditItem = (props) => {
           <Modal.CloseButton />
           <Modal.Header>Xóa món ăn</Modal.Header>
           <Modal.Body>
-            <Text>Nếu bạn xóa món ăn này sẽ không thể lấy lại được lại được. Vấn tiếp tục!</Text>
+            <Text>Nếu bạn xóa mã giảm giá này sẽ không thể lấy lại được lại được. Vấn tiếp tục!</Text>
           </Modal.Body>
           <Modal.Footer>
             <Button.Group space={2}>

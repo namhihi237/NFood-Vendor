@@ -120,6 +120,10 @@ export default {
 
   TOGGLE_STATUS_VOUCHER: gql`mutation ToggleVoucherStatus($id: ID!) {
     toggleVoucherStatus(id: $id)
+  }`,
+
+  DELETE_VOUCHER: gql`mutation DeleteVoucher($id: ID!) {
+    deleteVoucher(id: $id)
   }`
 
 }

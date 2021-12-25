@@ -20,4 +20,5 @@ export default {
   ORDER_DETAIL: 'orderDetail',
   VOUCHERS: 'vouchers',
   ADD_VOUCHER: 'addVoucher',
+  UPDATE_VOUCHER: 'updateVoucher',
 }

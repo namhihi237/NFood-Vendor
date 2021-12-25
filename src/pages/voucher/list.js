@@ -66,35 +66,39 @@ export default function Vouchers(props) {
 
   const renderItem = (item) => {
     return (
-      <View style={{ marginHorizontal: wp('2%'), paddingHorizontal: wp('3%') }} bg="#fff" mt="2" mb="1" pt="2" pb="2" shadow={1} rounded={4}>
-        <View justifyContent="space-between" flexDirection="row">
-          <Text bold fontSize="xl">{item.promoCode}</Text>
-          <Switch
-            offTrackColor="tertiary.100"
-            onTrackColor="tertiary.200"
-            onThumbColor="tertiary.500"
-            offThumbColor="tertiary.50"
-            size="md"
-            isChecked={item.status}
-            onToggle={() => {
-              handleToggleStatusVoucher(item._id)
-            }}
-          />
-        </View>
-        <View flexDirection="row" justifyContent="space-between">
-          <Text italic>Loại mã</Text>
-          <Text>{renderTypeDiscount(item.discountType)}</Text>
-        </View>
-        <View flexDirection="row" justifyContent="space-between">
-          <Text italic>Giảm giá</Text>
-          <Text>{renderDiscount(item)}</Text>
-        </View>
+      <TouchableOpacity onPress={() => navigation.navigate(SCREEN.UPDATE_VOUCHER, {
+        item
+      })}>
+        <View style={{ marginHorizontal: wp('2%'), paddingHorizontal: wp('3%') }} bg="#fff" mt="2" mb="1" pt="2" pb="2" shadow={1} rounded={4}>
+          <View justifyContent="space-between" flexDirection="row">
+            <Text bold fontSize="xl">{item.promoCode}</Text>
+            <Switch
+              offTrackColor="tertiary.100"
+              onTrackColor="tertiary.200"
+              onThumbColor="tertiary.500"
+              offThumbColor="tertiary.50"
+              size="md"
+              isChecked={item.status}
+              onToggle={() => {
+                handleToggleStatusVoucher(item._id)
+              }}
+            />
+          </View>
+          <View flexDirection="row" justifyContent="space-between">
+            <Text italic>Loại mã</Text>
+            <Text>{renderTypeDiscount(item.discountType)}</Text>
+          </View>
+          <View flexDirection="row" justifyContent="space-between">
+            <Text italic>Giảm giá</Text>
+            <Text>{renderDiscount(item)}</Text>
+          </View>
 
-        <View flexDirection="row" justifyContent="space-between">
-          <Text italic>Thời gian tạo</Text>
-          <Text color="#4f4f4f4f">{timeUtils.convertFullTime(new Date(item.createdAt - 0))}</Text>
+          <View flexDirection="row" justifyContent="space-between">
+            <Text italic>Thời gian tạo</Text>
+            <Text color="#4f4f4f4f">{timeUtils.convertFullTime(new Date(item.createdAt - 0))}</Text>
+          </View>
         </View>
-      </View>
+      </TouchableOpacity>
     )
   }
 

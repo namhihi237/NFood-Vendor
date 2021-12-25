@@ -10,6 +10,7 @@ import { useRoute, useNavigation } from "@react-navigation/native";
 import { useQuery, useMutation } from '@apollo/client';
 import { QUERY, MUTATION } from "../../graphql";
 import DateTimePicker from '@react-native-community/datetimepicker';
+import { timeUtils } from '../../utils';
 export default function AddVoucher(props) {
 
   const navigation = useNavigation();
@@ -49,6 +50,7 @@ export default function AddVoucher(props) {
     const currentDate = selectedDate || new Date();
     setShow(Platform.OS === 'ios');
     setStartDate(currentDate);
+    console.log(currentDate);
   };
 
   const onChange1 = (event, selectedDate) => {
