@@ -9,6 +9,7 @@ import { TabView, SceneMap } from 'react-native-tab-view';
 import { InputField, ButtonCustom, Toast, Header } from '../../components';
 import { SCREEN } from "../../constants"
 import Order from './order';
+import Report from './report';
 import { QUERY } from "../../graphql";
 
 const FirstRoute = () => <Center flex={1}><Image source={require('../../../assets/images/no-order.png')} style={{ width: wp('50%'), height: wp('55%') }} /></Center>
@@ -51,11 +52,16 @@ export default function Manager(props) {
     return <Center flex={1}><Image source={require('../../../assets/images/no-order.png')} style={{ width: wp('50%'), height: wp('55%') }} /></Center>
   }
 
+  const renderTabTurnover = () => {
+    return <Report />
+  }
+
   const renderOrder = () => renderTabOrders();
+  const renderTurnover = () => renderTabTurnover();
 
   const renderScene = SceneMap({
     orders: renderOrder,
-    turnover: SecondRoute,
+    turnover: renderTurnover,
   });
 
 
