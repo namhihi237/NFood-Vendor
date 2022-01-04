@@ -1,7 +1,11 @@
-import React from 'react';
+import React, { useState, useCallback } from 'react';
 import { StyleSheet, TouchableOpacity, Image } from 'react-native';
 import { Text, View } from "native-base";
 import { moneyUtils, orderUtils, timeUtils } from "../../utils";
+import { QUERY } from "../../graphql";
+import { useMutation, useQuery } from '@apollo/client';
+import MonthPicker from 'react-native-month-year-picker';
+import DateTimePicker from '@react-native-community/datetimepicker';
 
 import {
   widthPercentageToDP as wp,
@@ -10,34 +14,81 @@ import {
 
 const Report = (props) => {
 
+  const [type, setType] = useState('DATE');
+  const [time, setTime] = useState(new Date());
+
+  const [show, setShow] = useState(false);
+  const [showDate, setShowDate] = useState(false);
+
+  const showPicker = useCallback((value) => setShow(value), []);
+
+  const showPickerDate = useCallback((value) => setShowDate(value), []);
+
+  const onChangeDate = useCallback((event, selectedDate) => {
+    const currentDate = selectedDate || time;
+    setShowDate(false);
+    setTime(currentDate);
+
+    if (event.type === 'set') {
+      setType('DATE');
+    }
+  }, [time, showPickerDate]);
+
+  const onValueChange = useCallback(
+    (event, newDate) => {
+      const selectedDate = newDate || time;
+
+      showPicker(false);
+      setTime(selectedDate);
+      if (event === 'dateSetAction') {
+        setType('MONTH');
+      }
+    },
+    [time, showPicker],
+  );
+
+  const { data } = useQuery(QUERY.GET_REPORT, {
+    variables: {
+      type,
+      time,
+    },
+  });
+
+  const renderTime = (time) => {
+    if (type === 'DATE') {
+      return timeUtils.convertDate(time);
+    }
+    return timeUtils.convertMonth(time);
+  }
+
   return (
     <View>
       <View style={{ flexDirection: 'row', paddingHorizontal: wp('4%'), justifyContent: 'space-between', marginTop: 10, alignContent: 'center' }}>
         <Text fontSize="md" e>Xem doanh thu:</Text>
         <View style={{ flexDirection: 'row', paddingHorizontal: 10, justifyContent: 'space-between' }}>
-          <TouchableOpacity style={{ ...styles.buttonStyle, marginRight: 15 }}>
+          <TouchableOpacity style={{ ...styles.buttonStyle, marginRight: 15 }} onPress={() => showPickerDate(true)}>
             <Text>Theo ngày</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.buttonStyle}>
+          <TouchableOpacity style={styles.buttonStyle} onPress={() => showPicker(true)}>
             <Text>Theo tháng</Text>
           </TouchableOpacity>
         </View>
       </View>
 
       <View style={{ backgroundColor: '#fff', marginTop: 15, paddingTop: 10, paddingBottom: 15 }}>
-        <Text style={{ marginLeft: wp('5%'), marginBottom: 10 }}>Ngày 3/1/2022</Text>
+        <Text style={{ marginLeft: wp('5%'), marginBottom: 10 }}>{renderTime(time)}</Text>
         <View style={{ height: 1, backgroundColor: "#4f4f4f4f" }}></View>
         <View style={styles.textContainerReport}>
           <Text>Tổng doanh thu</Text>
-          <Text>0 đ</Text>
+          <Text color="#b91c1c">{moneyUtils.convertVNDToString(data?.vendorReport.totalRevenue)} đ</Text>
         </View>
         <View style={styles.textContainerReport}>
           <Text>Tổng số đơn hàng</Text>
-          <Text>0</Text>
+          <Text>{data?.vendorReport.totalOrder}</Text>
         </View>
         <View style={styles.textContainerReport}>
           <Text>Số đơn hoàn thành</Text>
-          <Text>0</Text>
+          <Text>{data?.vendorReport.totalOrderCompleted}</Text>
         </View>
       </View>
 
@@ -49,7 +100,7 @@ const Report = (props) => {
         <View style={{ height: 1, backgroundColor: "#4f4f4f4f", marginBottom: 15 }}></View>
         <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginBottom: 10, marginHorizontal: wp('5%') }}>
           <Text>Số dư trong tài khoản</Text>
-          <Text>0 đ</Text>
+          <Text>{data?.vendorReport.accountBalance} đ</Text>
         </View>
         <TouchableOpacity style={styles.moneyButton}>
           <Text color="#fff" bold fontSize="md">Rút tiền</Text>
@@ -63,7 +114,25 @@ const Report = (props) => {
           <Text underline color="#1d4ed8">Xem chi tiết</Text>
         </TouchableOpacity>
       </View>
+      {show && (
+        <MonthPicker
+          onChange={onValueChange}
+          value={time}
+          minimumDate={new Date()}
+          maximumDate={new Date(2025, 5)}
+          locale="vi"
+        />
+      )}
 
+      {showDate && (
+        <DateTimePicker
+          testID="dateTimePicker"
+          value={time}
+          mode={'date'}
+          display="default"
+          onChange={onChangeDate}
+        />
+      )}
     </View>
   );
 };

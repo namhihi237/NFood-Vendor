@@ -12,9 +12,8 @@ import Order from './order';
 import Report from './report';
 import { QUERY } from "../../graphql";
 
-const FirstRoute = () => <Center flex={1}><Image source={require('../../../assets/images/no-order.png')} style={{ width: wp('50%'), height: wp('55%') }} /></Center>
-const SecondRoute = () => <Center flex={1}><Image source={require('../../../assets/images/no-order.png')} style={{ width: wp('50%'), height: wp('55%') }} /></Center>
 const initialLayout = { width: Dimensions.get('window').width };
+
 export default function Manager(props) {
   const route = useRoute();
 
@@ -26,7 +25,9 @@ export default function Manager(props) {
     { key: 'turnover', title: 'Doanh thu' },
   ]);
 
-  const { data, refetch } = useQuery(QUERY.GET_ORDERS);
+  const { data, refetch } = useQuery(QUERY.GET_ORDERS, {
+
+  });
 
   React.useEffect(() => {
     navigation.addListener('focus', () => {

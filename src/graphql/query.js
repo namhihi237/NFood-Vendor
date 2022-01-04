@@ -52,44 +52,44 @@ export default {
     getNumberOfNotifications(userType: $userType)
   }`,
 
-  GET_ORDERS: gql`query GetOrderByVendor {
-    getOrderByVendor {
+  GET_ORDERS: gql`query getOrderByVendor {
+  getOrderByVendor {
+    _id
+    invoiceNumber
+    subTotal
+    shipping
+    discount
+    total
+    orderItems {
       _id
-      invoiceNumber
-      subTotal
-      shipping
-      discount
-      total
-      orderItems {
-        _id
-        price
-        quantity
-        name
-        image
-        note
-      }
-      address
-      phoneNumber
+      price
+      quantity
       name
-      acceptedShippingAt
-      estimatedDeliveryTime
-      paymentStatus
-      orderStatus
-      createdAt
-      buyer {
-        name
-        image
-        phoneNumber
-      }
-      shipper {
-        _id
-        name
-        phoneNumber
-        image
-      }
-      paymentMethod
+      image
+      note
     }
-  }`,
+    address
+    phoneNumber
+    name
+    acceptedShippingAt
+    estimatedDeliveryTime
+    paymentStatus
+    orderStatus
+    createdAt
+    buyer {
+      name
+      image
+      phoneNumber
+    }
+    shipper {
+      _id
+      name
+      phoneNumber
+      image
+    }
+    paymentMethod
+  }
+}`,
 
   GET_VOUCHERS: gql`query GetVouchers {
     getVouchers {
@@ -102,6 +102,15 @@ export default {
       startDate
       endDate
       createdAt
+    }
+  }`,
+
+  GET_REPORT: gql`query VendorReport($type: reportType!, $time: String!) {
+    vendorReport(type: $type, time: $time) {
+      totalRevenue
+      totalOrder
+      totalOrderCompleted
+      accountBalance
     }
   }`
 };
