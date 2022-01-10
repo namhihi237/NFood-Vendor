@@ -41,7 +41,7 @@ export default function Store(props) {
           <Text style={styles.title}>Chỉnh sửa menu</Text>
           <FontAwesome5 name="arrow-right" size={20} color="#A4A4A4" />
         </TouchableOpacity>
-        <TouchableOpacity style={styles.card}>
+        <TouchableOpacity style={styles.card} onPress={() => navigation.navigate(SCREEN.REVIEWS)}>
           <Text style={styles.title}>Đánh giá của khách hàng</Text>
           <FontAwesome5 name="arrow-right" size={20} color="#A4A4A4" />
         </TouchableOpacity>

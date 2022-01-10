@@ -16,7 +16,8 @@ import {
   OrderDetail,
   Vouchers,
   AddVoucher,
-  UpdateVoucher
+  UpdateVoucher,
+  Reviews
 } from '../pages';
 
 import Tab from './tab';
@@ -59,6 +60,7 @@ const Navigation = () => {
         <Stack.Screen name={SCREEN.VOUCHERS} component={Vouchers} />
         <Stack.Screen name={SCREEN.ADD_VOUCHER} component={AddVoucher} />
         <Stack.Screen name={SCREEN.UPDATE_VOUCHER} component={UpdateVoucher} />
+        <Stack.Screen name={SCREEN.REVIEWS} component={Reviews} />
 
       </Stack.Navigator>
     </NavigationContainer>

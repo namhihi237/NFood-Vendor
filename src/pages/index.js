@@ -9,6 +9,8 @@ import { Menu, AddCategory, EditCategory, AddItem, EditItem } from './menu';
 import AuthPhone from "./auth-phone";
 import OrderDetail from "./order-detail";
 import { Vouchers, AddVoucher, UpdateVoucher } from './voucher';
+import Reviews from "./reviews";
+
 export {
   Register,
   Login,
@@ -27,5 +29,6 @@ export {
   OrderDetail,
   Vouchers,
   AddVoucher,
-  UpdateVoucher
+  UpdateVoucher,
+  Reviews
 };

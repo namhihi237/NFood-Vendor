@@ -112,5 +112,24 @@ export default {
       totalOrderCompleted
       accountBalance
     }
+  }`,
+
+  GET_REVIEWS: gql`query GetReviews($type: reviewEnum!) {
+    getReviews(type: $type) {
+      _id
+      rating
+      comment
+      image
+      buyerId
+      buyer {
+        _id
+        name
+        phoneNumber
+        image
+      }
+      reviewedId
+      type
+      createdAt
+    }
   }`
 };
