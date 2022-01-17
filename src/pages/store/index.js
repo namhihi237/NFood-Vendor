@@ -9,6 +9,7 @@ import { InputField, ButtonCustom, Toast, Header } from '../../components';
 import { SCREEN } from "../../constants";
 import Info from './info';
 import { QUERY, client } from '../../graphql';
+import { storageUtils } from '../../utils';
 
 const noImage = "https://res.cloudinary.com/do-an-cnpm/image/upload/v1635733754/ck9dkwysgr3inpx6btzn.jpg";
 
@@ -20,6 +21,13 @@ export default function Store(props) {
       role: "vendor"
     },
   });
+
+  const logOut = async () => {
+    await storageUtils.removeItem("token");
+    await storageUtils.removeItem("phoneNumber");
+    await storageUtils.removeItem("password");
+    navigation.navigate(SCREEN.LOGIN, { clear: true });
+  }
 
   const navigation = useNavigation();
   return (
@@ -53,6 +61,9 @@ export default function Store(props) {
         </TouchableOpacity>
       </View>
       <Info user={getUser ? getUser : null} />
+      <TouchableOpacity style={styles.logOut} onPress={logOut}>
+        <Text fontSize="md" mr="2" color="#0891b2">Đăng xuất</Text>
+      </TouchableOpacity>
     </View >
   );
 }
@@ -116,5 +127,12 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderRadius: 4,
   },
+  logOut: {
+    backgroundColor: '#fff',
+    paddingHorizontal: wp("5%"),
+    alignItems: 'center',
+    paddingVertical: hp("2%"),
+    justifyContent: 'center'
+  }
 
 });
