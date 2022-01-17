@@ -39,9 +39,8 @@ const Report = (props) => {
       const selectedDate = newDate || time;
 
       showPicker(false);
-      setTime(selectedDate);
       if (event === 'dateSetAction') {
-        setType('MONTH');
+        setTime(selectedDate);
       }
     },
     [time, showPicker],

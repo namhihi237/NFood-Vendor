@@ -116,20 +116,25 @@ export default {
 
   GET_REVIEWS: gql`query GetReviews($type: reviewEnum!) {
     getReviews(type: $type) {
-      _id
-      rating
-      comment
-      image
-      buyerId
-      buyer {
+      reviews {
+        buyerId
         _id
-        name
-        phoneNumber
+        rating
+        comment
         image
+        buyer {
+          _id
+          name
+          image
+          phoneNumber
+        }
+        reviewedId
+        type
+        createdAt
       }
-      reviewedId
-      type
-      createdAt
+      badReviews
+      goodReviews
+      normalReviews
     }
   }`
 };

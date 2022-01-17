@@ -49,13 +49,12 @@ export default function Reviews(props) {
             <Text bold fontSize="lg">{item.buyer?.name}</Text>
           </View>
           <View style={{ ...styles.ratingText, backgroundColor: item.rating === 3 ? 'red' : item.rating === 2 ? '#166534' : '#7e22ce' }}>
-            <Text fontSize="md" color="#fff" bold>
+            <Text fontSize="sm" color="#fff" bold>
               {renderRatingToText(item.rating)}
             </Text>
           </View>
         </View>
-        <Text italic fontSize="md" color="#959BA4">{timeUtils.convertFullTime(new Date(item.createdAt - 0))}</Text>
-
+        <Text italic fontSize="sm" color="#959BA4">{timeUtils.convertFullTime(new Date(item.createdAt - 0))}</Text>
 
         <Text>{item.comment}</Text>
       </View>
@@ -65,9 +64,23 @@ export default function Reviews(props) {
   return (
     <View style={styles.container} >
       <Header title={"Đánh giá của khách hàng"} />
+      <View style={styles.summary}>
+        <View style={styles.iconButton}>
+          <Image source={require('../../../assets/images/bad.png')} style={styles.icon} />
+          <Text fontSize="xs" style={{ color: '#7e22ce' }}>Chưa hài lòng {data?.getReviews?.badReviews || 0}</Text>
+        </View>
+        <View style={styles.iconButton} >
+          <Image source={require('../../../assets/images/nomarl.png')} style={styles.icon} />
+          <Text fontSize="xs" style={{ color: '#166534' }}>Bình thường {data?.getReviews?.normalReviews || 0}</Text>
+        </View>
+        <View style={styles.iconButton}>
+          <Image source={require('../../../assets/images/good.png')} style={styles.icon} />
+          <Text fontSize="xs" style={{ color: 'red' }}>Hài lòng: {data?.getReviews?.goodReviews || 0}</Text>
+        </View>
+      </View>
       {
-        data && data.getReviews && data.getReviews.length > 0 ? (<FlatList
-          data={data ? data.getReviews : []}
+        data && data.getReviews && data.getReviews.reviews.length > 0 ? (<FlatList
+          data={data ? data.getReviews.reviews : []}
           renderItem={({ item }) => renderItem(item)}
           keyExtractor={item => item._id}
 
@@ -97,6 +110,18 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     paddingHorizontal: 8,
     paddingVertical: 4,
-
+  },
+  summary: {
+    paddingHorizontal: wp('5%'),
+    paddingVertical: hp('2%'),
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  icon: {
+    width: wp('10%'),
+    height: wp('10%'),
+  },
+  iconButton: {
+    alignItems: 'center',
   }
 });
