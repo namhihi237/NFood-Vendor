@@ -136,5 +136,16 @@ export default {
       goodReviews
       normalReviews
     }
+  }`,
+
+  REPORT_ITEM: gql`query GetReportItem($time: String!, $type: reportType!) {
+    getReportItem(time: $time, type: $type) {
+      _id
+      description
+      name
+      totalRevenue
+      quantitySold
+      price
+    }
   }`
 };

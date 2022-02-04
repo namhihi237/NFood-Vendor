@@ -22,4 +22,5 @@ export default {
   ADD_VOUCHER: 'addVoucher',
   UPDATE_VOUCHER: 'updateVoucher',
   REVIEWS: 'reviews',
+  REPORT_ITEM: 'reportItem',
 }

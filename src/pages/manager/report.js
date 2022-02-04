@@ -6,13 +6,15 @@ import { QUERY } from "../../graphql";
 import { useMutation, useQuery } from '@apollo/client';
 import MonthPicker from 'react-native-month-year-picker';
 import DateTimePicker from '@react-native-community/datetimepicker';
-
+import { useNavigation } from '@react-navigation/native';
+import { SCREEN } from '../../constants';
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
 
 const Report = (props) => {
+  const navigation = useNavigation();
 
   const [type, setType] = useState('DATE');
   const [time, setTime] = useState(new Date());
@@ -41,6 +43,7 @@ const Report = (props) => {
       showPicker(false);
       if (event === 'dateSetAction') {
         setTime(selectedDate);
+        setType('MONTH');
       }
     },
     [time, showPicker],
@@ -109,7 +112,7 @@ const Report = (props) => {
 
       <View style={styles.reportItem}>
         <Text bold fontSize="md">Thống kê món bán chạy</Text>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={() => navigation.navigate(SCREEN.REPORT_ITEM)}>
           <Text underline color="#1d4ed8">Xem chi tiết</Text>
         </TouchableOpacity>
       </View>

@@ -10,6 +10,7 @@ import AuthPhone from "./auth-phone";
 import OrderDetail from "./order-detail";
 import { Vouchers, AddVoucher, UpdateVoucher } from './voucher';
 import Reviews from "./reviews";
+import ReportItem from "./report-item";
 
 export {
   Register,
@@ -30,5 +31,6 @@ export {
   Vouchers,
   AddVoucher,
   UpdateVoucher,
-  Reviews
+  Reviews,
+  ReportItem,
 };
