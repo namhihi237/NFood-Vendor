@@ -6,6 +6,37 @@ import { useNavigation } from '@react-navigation/native';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import { SCREEN } from "../../constants";
 
+
+const renderTimeOpen = (timeOpen = []) => {
+  let time = '';
+  timeOpen.forEach((item, index) => {
+    switch (item.day) {
+      case '2':
+        time += `Thứ 2: ${item.openTime} - ${item.closeTime}, `;
+        break;
+      case '3':
+        time += `Thứ 3: ${item.openTime} - ${item.closeTime}, `;
+        break;
+      case '4':
+        time += `Thứ 4: ${item.openTime} - ${item.closeTime}, `;
+        break;
+      case '5':
+        time += `Thứ 5: ${item.openTime} - ${item.closeTime}, `;
+        break;
+      case '6':
+        time += `Thứ 6: ${item.openTime} - ${item.closeTime}, `;
+        break;
+      case '7':
+        time += `Thứ bảy: ${item.openTime} - ${item.closeTime}, `;
+        break;
+      case '8':
+        time += `Chủ nhật: ${item.openTime} - ${item.closeTime}`;
+        break;
+    }
+  });
+  return time;
+}
+
 export default function Info(props) {
   const { user } = props;
   const navigation = useNavigation();
@@ -28,7 +59,7 @@ export default function Info(props) {
       </View>
       <View style={styles.row}>
         <FontAwesome5 name="clock" size={16} color="#000" />
-        <Text isTruncated style={{ marginLeft: 10, fontSize: 16 }}>8:00 - 22:00</Text>
+        <Text ml="2" isTruncated style={{ marginLeft: 10, fontSize: 16 }}>{renderTimeOpen(user?.timeOpen)}</Text>
       </View>
     </View>
   );

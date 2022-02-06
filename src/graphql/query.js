@@ -17,6 +17,12 @@ export default {
       coordinates
       name
       isReceiveOrder
+      timeOpen {
+        day
+        openTime
+        isOpen
+        closeTime
+      }
     }
   }`,
 

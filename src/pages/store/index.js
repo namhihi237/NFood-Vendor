@@ -11,8 +11,6 @@ import Info from './info';
 import { QUERY, client } from '../../graphql';
 import { storageUtils } from '../../utils';
 
-const noImage = "https://res.cloudinary.com/do-an-cnpm/image/upload/v1635733754/ck9dkwysgr3inpx6btzn.jpg";
-
 export default function Store(props) {
 
   const { getUser } = client.readQuery({
