@@ -1,6 +1,6 @@
-import { Text, Box, View, Switch } from "native-base";
+import { Text, Box, View } from "native-base";
 import React, { useEffect, useState } from 'react';
-import { StyleSheet, TouchableOpacity, ScrollView, Image } from 'react-native';
+import { StyleSheet, TouchableOpacity } from 'react-native';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import { useNavigation } from '@react-navigation/native';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
@@ -9,28 +9,28 @@ import { SCREEN } from "../../constants";
 
 const renderTimeOpen = (timeOpen = []) => {
   let time = '';
-  timeOpen.forEach((item, index) => {
+  timeOpen.forEach((item) => {
     switch (item.day) {
       case '2':
-        time += `Thứ 2: ${item.openTime} - ${item.closeTime}, `;
+        time += `Thứ 2: ${item.openTime}h - ${item.closeTime}h, `;
         break;
       case '3':
-        time += `Thứ 3: ${item.openTime} - ${item.closeTime}, `;
+        time += `Thứ 3: ${item.openTime}h - ${item.closeTime}h, `;
         break;
       case '4':
-        time += `Thứ 4: ${item.openTime} - ${item.closeTime}, `;
+        time += `Thứ 4: ${item.openTime}h - ${item.closeTime}h, `;
         break;
       case '5':
-        time += `Thứ 5: ${item.openTime} - ${item.closeTime}, `;
+        time += `Thứ 5: ${item.openTime}h - ${item.closeTime}h, `;
         break;
       case '6':
-        time += `Thứ 6: ${item.openTime} - ${item.closeTime}, `;
+        time += `Thứ 6: ${item.openTime}h - ${item.closeTime}h, `;
         break;
       case '7':
-        time += `Thứ bảy: ${item.openTime} - ${item.closeTime}, `;
+        time += `Thứ bảy: ${item.openTime}h - ${item.closeTime}h, `;
         break;
       case '8':
-        time += `Chủ nhật: ${item.openTime} - ${item.closeTime}`;
+        time += `Chủ nhật: ${item.openTime}h - ${item.closeTime}h`;
         break;
     }
   });
@@ -44,7 +44,7 @@ export default function Info(props) {
     <View style={styles.infoStore}>
       <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginBottom: 15 }}>
         <Text bold fontSize="lg">Thông tin cửa hàng</Text>
-        <TouchableOpacity style={{ alignItems: 'center', flexDirection: 'row' }}>
+        <TouchableOpacity style={{ alignItems: 'center', flexDirection: 'row' }} onPress={() => navigation.navigate(SCREEN.INFO_DETAIL)}>
           <FontAwesome5 name="edit" size={16} color="#000" />
           <Text style={{ marginLeft: 10 }}>Chỉnh sửa</Text>
         </TouchableOpacity>

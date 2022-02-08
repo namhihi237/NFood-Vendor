@@ -23,4 +23,6 @@ export default {
   UPDATE_VOUCHER: 'updateVoucher',
   REVIEWS: 'reviews',
   REPORT_ITEM: 'reportItem',
+  INFO_DETAIL: 'infoDetail',
+  UPDATE_TIME: 'updateTime',
 }

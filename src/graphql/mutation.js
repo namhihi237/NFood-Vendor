@@ -124,6 +124,9 @@ export default {
 
   DELETE_VOUCHER: gql`mutation DeleteVoucher($id: ID!) {
     deleteVoucher(id: $id)
-  }`
+  }`,
 
+  UPDATE_TIME_OPEN: gql`mutation UpdateTimeOpen($timeOpen: openTime!) {
+    updateTimeOpen(timeOpen: $timeOpen)
+  }`
 }
