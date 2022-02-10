@@ -11,7 +11,7 @@ import OrderDetail from "./order-detail";
 import { Vouchers, AddVoucher, UpdateVoucher } from './voucher';
 import Reviews from "./reviews";
 import ReportItem from "./report-item";
-import { InfoDetail, UpdateTime } from "./info-detail";
+import { InfoDetail, UpdateTime, UpdateTimeDetail, UpdateProfile } from "./info-detail";
 
 export {
   Register,
@@ -35,5 +35,7 @@ export {
   Reviews,
   ReportItem,
   InfoDetail,
-  UpdateTime
+  UpdateTime,
+  UpdateTimeDetail,
+  UpdateProfile
 };  

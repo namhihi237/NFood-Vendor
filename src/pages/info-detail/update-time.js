@@ -1,11 +1,13 @@
 import { Text, View, Switch } from "native-base";
 import React from 'react';
-import { StyleSheet } from 'react-native';
+import { StyleSheet, TouchableOpacity } from 'react-native';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { Header } from '../../components';
 import { QUERY, MUTATION } from '../../graphql';
 import { useQuery, useMutation } from '@apollo/client';
+import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
+import { SCREEN } from '../../constants';
 
 export default function UpdateTime(props) {
   const navigation = useNavigation();
@@ -58,8 +60,14 @@ export default function UpdateTime(props) {
   }
 
   const renderHours = (item) => {
-    return `${item.openTime}h - ${item.closeTime}h`;
+    return `${item.openTime} - ${item.closeTime}`;
   }
+  React.useEffect(() => {
+    navigation.addListener('focus', () => {
+      refetch();
+    });
+  }, []);
+
 
   const renderTime = () => {
     if (data) {
@@ -79,7 +87,16 @@ export default function UpdateTime(props) {
               <Text fontSize="md" bold>{renderDate(item)}</Text>
             </View>
 
-            <Text fontSize="md">{renderHours(item)}</Text>
+            <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
+              <Text fontSize="md" mr="2">{renderHours(item)}</Text>
+              <TouchableOpacity onPress={() => {
+                navigation.navigate(SCREEN.UPDATE_TIME_DETAIL, {
+                  item
+                });
+              }}>
+                <FontAwesome5 name="edit" size={20} color="#a4a4a4a4" />
+              </TouchableOpacity>
+            </View>
           </View>
         );
       });

@@ -128,5 +128,9 @@ export default {
 
   UPDATE_TIME_OPEN: gql`mutation UpdateTimeOpen($timeOpen: openTime!) {
     updateTimeOpen(timeOpen: $timeOpen)
+  }`,
+
+  UPDATE_PROFILE: gql`mutation UpdateVendorProfile($name: String!, $address: String!, $image: String!, $email: String) {
+    updateVendorProfile(name: $name, address: $address, image: $image, email: $email)
   }`
 }

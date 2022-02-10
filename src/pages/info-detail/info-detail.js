@@ -15,25 +15,32 @@ const renderTimeOpen = (timeOpen = []) => {
   timeOpen.forEach((item) => {
     switch (item.day) {
       case '2':
-        times.push(`Thứ 2: ${item.openTime}h - ${item.closeTime}h`);
+        if (item.isOpen)
+          times.push(`Thứ 2: ${item.openTime} - ${item.closeTime}`);
         break;
       case '3':
-        times.push(`Thứ 3: ${item.openTime}h - ${item.closeTime}h`);
+        if (item.isOpen)
+          times.push(`Thứ 3: ${item.openTime} - ${item.closeTime}`);
         break;
       case '4':
-        times.push(`Thứ 4: ${item.openTime}h - ${item.closeTime}h`);
+        if (item.isOpen)
+          times.push(`Thứ 4: ${item.openTime} - ${item.closeTime}`);
         break;
       case '5':
-        times.push(`Thứ 5: ${item.openTime}h - ${item.closeTime}h`);
+        if (item.isOpen)
+          times.push(`Thứ 5: ${item.openTime} - ${item.closeTime}`);
         break;
       case '6':
-        times.push(`Thứ 6: ${item.openTime}h - ${item.closeTime}h`);
+        if (item.isOpen)
+          times.push(`Thứ 6: ${item.openTime} - ${item.closeTime}`);
         break;
       case '7':
-        times.push(`Thứ 7: ${item.openTime}h - ${item.closeTime}h`);
+        if (item.isOpen)
+          times.push(`Thứ 7: ${item.openTime} - ${item.closeTime}`);
         break;
       case '8':
-        times.push(`Chủ nhật: ${item.openTime}h - ${item.closeTime}h`);
+        if (item.isOpen)
+          times.push(`Chủ nhật: ${item.openTime} - ${item.closeTime}`);
         break;
     }
   });
@@ -43,12 +50,18 @@ const renderTimeOpen = (timeOpen = []) => {
 export default function InfoDetail(props) {
   const navigation = useNavigation();
 
-  const { data } = useQuery(QUERY.GET_PROFILE, {
+  const { data, refetch } = useQuery(QUERY.GET_PROFILE, {
     variables: {
       role: 'vendor'
     },
-    fetchPolicy: 'network-only'
+    fetchPolicy: 'network-only',
   });
+
+  React.useEffect(() => {
+    navigation.addListener('focus', () => {
+      refetch();
+    });
+  }, []);
 
   const renderTime = () => {
     if (data) {
@@ -70,7 +83,11 @@ export default function InfoDetail(props) {
         <View style={{ backgroundColor: '#fff', paddingHorizontal: wp('5%'), paddingVertical: wp('2%') }}>
           <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginBottom: 15 }}>
             <Text bold fontSize="lg">Thông tin cửa hàng</Text>
-            <TouchableOpacity style={{ alignItems: 'center', flexDirection: 'row' }} onPress={() => navigation.navigate(SCREEN.INFO_DETAIL)}>
+            <TouchableOpacity style={{ alignItems: 'center', flexDirection: 'row' }} onPress={() => {
+              navigation.navigate(SCREEN.UPDATE_PROFILE, {
+                vendor: data?.getUser
+              })
+            }}>
               <FontAwesome5 name="edit" size={16} color="#000" />
               <Text style={{ marginLeft: 10 }}>Chỉnh sửa</Text>
             </TouchableOpacity>

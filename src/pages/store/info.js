@@ -12,25 +12,25 @@ const renderTimeOpen = (timeOpen = []) => {
   timeOpen.forEach((item) => {
     switch (item.day) {
       case '2':
-        time += `Thứ 2: ${item.openTime}h - ${item.closeTime}h, `;
+        time += `Thứ 2: ${item.openTime} - ${item.closeTime}, `;
         break;
       case '3':
-        time += `Thứ 3: ${item.openTime}h - ${item.closeTime}h, `;
+        time += `Thứ 3: ${item.openTime} - ${item.closeTime}, `;
         break;
       case '4':
-        time += `Thứ 4: ${item.openTime}h - ${item.closeTime}h, `;
+        time += `Thứ 4: ${item.openTime} - ${item.closeTime}, `;
         break;
       case '5':
-        time += `Thứ 5: ${item.openTime}h - ${item.closeTime}h, `;
+        time += `Thứ 5: ${item.openTime} - ${item.closeTime}, `;
         break;
       case '6':
-        time += `Thứ 6: ${item.openTime}h - ${item.closeTime}h, `;
+        time += `Thứ 6: ${item.openTime} - ${item.closeTime}, `;
         break;
       case '7':
-        time += `Thứ bảy: ${item.openTime}h - ${item.closeTime}h, `;
+        time += `Thứ bảy: ${item.openTime} - ${item.closeTime}, `;
         break;
       case '8':
-        time += `Chủ nhật: ${item.openTime}h - ${item.closeTime}h`;
+        time += `Chủ nhật: ${item.openTime} - ${item.closeTime}`;
         break;
     }
   });

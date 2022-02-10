@@ -20,7 +20,9 @@ import {
   Reviews,
   ReportItem,
   InfoDetail,
-  UpdateTime
+  UpdateTime,
+  UpdateTimeDetail,
+  UpdateProfile
 } from '../pages';
 
 import Tab from './tab';
@@ -67,6 +69,8 @@ const Navigation = () => {
         <Stack.Screen name={SCREEN.REPORT_ITEM} component={ReportItem} />
         <Stack.Screen name={SCREEN.INFO_DETAIL} component={InfoDetail} />
         <Stack.Screen name={SCREEN.UPDATE_TIME} component={UpdateTime} />
+        <Stack.Screen name={SCREEN.UPDATE_TIME_DETAIL} component={UpdateTimeDetail} />
+        <Stack.Screen name={SCREEN.UPDATE_PROFILE} component={UpdateProfile} />
 
       </Stack.Navigator>
     </NavigationContainer>

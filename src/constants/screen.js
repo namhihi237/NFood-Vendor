@@ -25,4 +25,6 @@ export default {
   REPORT_ITEM: 'reportItem',
   INFO_DETAIL: 'infoDetail',
   UPDATE_TIME: 'updateTime',
+  UPDATE_TIME_DETAIL: 'updateTimeDetail',
+  UPDATE_PROFILE: 'updateProfile',
 }

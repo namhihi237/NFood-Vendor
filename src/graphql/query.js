@@ -16,6 +16,7 @@ export default {
       isShipper
       coordinates
       name
+      email
       isReceiveOrder
       timeOpen {
         day
