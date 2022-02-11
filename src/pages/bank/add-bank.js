@@ -11,7 +11,6 @@ import { useMutation } from '@apollo/client';
 export default function AddBank(props) {
   const navigation = useNavigation();
   const route = useRoute();
-  console.log(route.params);
 
   const [bankName, setBankName] = React.useState(route.params?.bank?.bankName || '');
   const [accountNumber, setAccountNumber] = React.useState(route.params?.bank?.accountNumber || '');
@@ -70,7 +69,8 @@ export default function AddBank(props) {
 
               {
                 BANKS.map((item, index) => {
-                  return (<Select.Item label={item.shortName} value={item.shortName} />)
+                  return (<Select.Item label={`${item.vn_name} - ${item.shortName}`}
+                    value={`${item.vn_name} - ${item.shortName}`} />)
                 })
               }
             </Select>
