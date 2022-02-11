@@ -28,4 +28,5 @@ export default {
   UPDATE_TIME_DETAIL: 'updateTimeDetail',
   UPDATE_PROFILE: 'updateProfile',
   ADD_BANK: 'addBank',
+  WITHDRAW: 'withdraw',
 }

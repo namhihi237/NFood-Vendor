@@ -23,7 +23,8 @@ import {
   UpdateTime,
   UpdateTimeDetail,
   UpdateProfile,
-  AddBank
+  AddBank,
+  WithDraw
 } from '../pages';
 
 import Tab from './tab';
@@ -73,6 +74,7 @@ const Navigation = () => {
         <Stack.Screen name={SCREEN.UPDATE_TIME_DETAIL} component={UpdateTimeDetail} />
         <Stack.Screen name={SCREEN.UPDATE_PROFILE} component={UpdateProfile} />
         <Stack.Screen name={SCREEN.ADD_BANK} component={AddBank} />
+        <Stack.Screen name={SCREEN.WITHDRAW} component={WithDraw} />
 
       </Stack.Navigator>
     </NavigationContainer>

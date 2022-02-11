@@ -13,6 +13,7 @@ import Reviews from "./reviews";
 import ReportItem from "./report-item";
 import { InfoDetail, UpdateTime, UpdateTimeDetail, UpdateProfile } from "./info-detail";
 import { AddBank } from './bank';
+import WithDraw from "./withdraw";
 
 export {
   Register,
@@ -39,5 +40,6 @@ export {
   UpdateTime,
   UpdateTimeDetail,
   UpdateProfile,
-  AddBank
+  AddBank,
+  WithDraw
 };  

@@ -102,9 +102,13 @@ const Report = (props) => {
         <View style={{ height: 1, backgroundColor: "#4f4f4f4f", marginBottom: 15 }}></View>
         <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginBottom: 10, marginHorizontal: wp('5%') }}>
           <Text>Số dư trong tài khoản</Text>
-          <Text>{data?.vendorReport.accountBalance} đ</Text>
+          <Text>{moneyUtils.convertVNDToString(data?.vendorReport.accountBalance)} đ</Text>
         </View>
-        <TouchableOpacity style={styles.moneyButton}>
+        <TouchableOpacity style={styles.moneyButton} onPress={() => {
+          navigation.navigate(SCREEN.WITHDRAW, {
+            money: data?.vendorReport.accountBalance,
+          });
+        }}>
           <Text color="#fff" bold fontSize="md">Yêu cầu rút tiền</Text>
         </TouchableOpacity>
         <Text style={{ marginHorizontal: wp('4%'), marginTop: 10, color: 'red' }}>Bạn có thể rút tiền khi đã cung cấp đầy đủ thông tin tài khoản tài khoản</Text>
