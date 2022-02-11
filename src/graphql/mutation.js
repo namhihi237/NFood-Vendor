@@ -132,5 +132,9 @@ export default {
 
   UPDATE_PROFILE: gql`mutation UpdateVendorProfile($name: String!, $address: String!, $image: String!, $email: String) {
     updateVendorProfile(name: $name, address: $address, image: $image, email: $email)
+  }`,
+
+  ADD_BANK: gql`mutation AddBankAccount($bankName: String!, $accountName: String!, $accountNumber: String!, $type: roleEnum!) {
+    addBankAccount(bankName: $bankName, accountName: $accountName, accountNumber: $accountNumber, type: $type)
   }`
 }

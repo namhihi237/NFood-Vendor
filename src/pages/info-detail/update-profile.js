@@ -50,13 +50,13 @@ export default function UpdateProfile(props) {
       <View style={styles.container}>
         <View>
           <Text mb="2">Tên quán (*)</Text>
-          <Input fontSize="md" value={name} onChangeText={onChangeName} />
+          <Input fontSize="md" value={name} onChangeText={onChangeName} borderColor="#B2B6BB" />
 
           <Text mb="2" mt="4">Địa chỉ (*)</Text>
-          <Input fontSize="md" value={address} onChangeText={onChangeAddress} />
+          <Input fontSize="md" value={address} onChangeText={onChangeAddress} borderColor="#B2B6BB" />
 
           <Text mb="2" mt="4">Email</Text>
-          <Input fontSize="md" value={email} onChangeText={onChangeEmail} type="email" />
+          <Input fontSize="md" value={email} onChangeText={onChangeEmail} type="email" borderColor="#B2B6BB" />
         </View>
         <ButtonCustom height="6%" width="90%" title="Cập nhật" onPress={update} />
       </View>

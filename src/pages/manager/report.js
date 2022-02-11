@@ -105,7 +105,7 @@ const Report = (props) => {
           <Text>{data?.vendorReport.accountBalance} đ</Text>
         </View>
         <TouchableOpacity style={styles.moneyButton}>
-          <Text color="#fff" bold fontSize="md">Rút tiền</Text>
+          <Text color="#fff" bold fontSize="md">Yêu cầu rút tiền</Text>
         </TouchableOpacity>
         <Text style={{ marginHorizontal: wp('4%'), marginTop: 10, color: 'red' }}>Bạn có thể rút tiền khi đã cung cấp đầy đủ thông tin tài khoản tài khoản</Text>
       </View>

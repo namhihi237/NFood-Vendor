@@ -1,23 +1,23 @@
-import { Text, Box, View, Switch } from "native-base";
-import React, { useEffect, useState } from 'react';
-import { StyleSheet, TouchableOpacity, ScrollView, Image } from 'react-native';
+import { Text, View } from "native-base";
+import React from 'react';
+import { StyleSheet, TouchableOpacity, Image } from 'react-native';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import { useNavigation } from '@react-navigation/native';
-import { useMutation, useQuery } from '@apollo/client';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
-import { InputField, ButtonCustom, Toast, Header } from '../../components';
+import { Header } from '../../components';
 import { SCREEN } from "../../constants";
 import Info from './info';
+import { useQuery } from '@apollo/client';
 import { QUERY, client } from '../../graphql';
 import { storageUtils } from '../../utils';
 
 export default function Store(props) {
 
-  const { getUser } = client.readQuery({
-    query: QUERY.GET_PROFILE,
+  const { data, refetch } = useQuery(QUERY.GET_PROFILE, {
     variables: {
-      role: "vendor"
+      role: 'vendor'
     },
+    fetchPolicy: 'network-only',
   });
 
   const logOut = async () => {
@@ -27,38 +27,46 @@ export default function Store(props) {
     navigation.navigate(SCREEN.LOGIN, { clear: true });
   }
 
+  React.useEffect(() => {
+    navigation.addListener('focus', () => {
+      refetch();
+    });
+  }, []);
+
   const navigation = useNavigation();
   return (
     <View style={styles.mainContainer}>
       <Header title={"Cửa hàng"} />
       <View style={styles.infoContainer}>
-        <Image source={{ uri: getUser ? getUser?.image : null }} style={styles.avatar} />
+        <Image source={{ uri: data?.getUser ? data?.getUser?.image : null }} style={styles.avatar} />
         <View>
-          <Text bold fontSize="xl">{getUser?.name}</Text>
-          <Text fontSize="lg">{getUser?.phoneNumber}</Text>
+          <Text bold fontSize="xl">{data?.getUser?.name}</Text>
+          <Text fontSize="lg">{data?.getUser?.phoneNumber}</Text>
         </View>
       </View>
       <View>
         <TouchableOpacity style={styles.card} onPress={() => navigation.navigate(SCREEN.VOUCHERS)}>
           <Text style={styles.title}>Quản lý khuyến mãi</Text>
-          <FontAwesome5 name="arrow-right" size={20} color="#A4A4A4" />
+          <FontAwesome5 name="arrow-right" size={20} color="#F24F04" />
         </TouchableOpacity>
         <TouchableOpacity style={styles.card} onPress={() => navigation.navigate(SCREEN.MENU)}>
           <Text style={styles.title}>Chỉnh sửa menu</Text>
-          <FontAwesome5 name="arrow-right" size={20} color="#A4A4A4" />
+          <FontAwesome5 name="arrow-right" size={20} color="#F24F04" />
         </TouchableOpacity>
         <TouchableOpacity style={styles.card} onPress={() => navigation.navigate(SCREEN.REVIEWS)}>
           <Text style={styles.title}>Đánh giá của khách hàng</Text>
-          <FontAwesome5 name="arrow-right" size={20} color="#A4A4A4" />
+          <FontAwesome5 name="arrow-right" size={20} color="#F24F04" />
         </TouchableOpacity>
       </View>
       <View style={styles.cardOnline}>
-        <TouchableOpacity style={styles.btn}>
-          <Text style={{ fontSize: 16, fontFamily: 'SF-UI-Text-Regular' }}>Thêm tài khoản tín dụng</Text>
-          <FontAwesome5 name="arrow-right" size={20} color="#A4A4A4" />
+        <TouchableOpacity style={styles.btn} onPress={() => navigation.navigate(SCREEN.ADD_BANK, {
+          bank: data?.getUser?.bank
+        })}>
+          <Text style={{ fontSize: 16, fontFamily: 'SF-UI-Text-Regular' }}>Thêm tài khoản ngân hàng</Text>
+          <FontAwesome5 name="arrow-right" size={20} color="#F24F04" />
         </TouchableOpacity>
       </View>
-      <Info user={getUser ? getUser : null} />
+      <Info user={data?.getUser ? data?.getUser : null} />
       <TouchableOpacity style={styles.logOut} onPress={logOut}>
         <Text fontSize="md" mr="2" color="#0891b2">Đăng xuất</Text>
       </TouchableOpacity>

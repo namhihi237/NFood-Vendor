@@ -15,6 +15,11 @@ export default {
       isBuyer
       isShipper
       coordinates
+      bank {
+        accountNumber
+        accountName
+        bankName
+      }
       name
       email
       isReceiveOrder
