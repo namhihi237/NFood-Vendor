@@ -3,7 +3,7 @@ import React from "react";
 import { StyleSheet } from 'react-native';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import { Header, Toast, ButtonCustom } from "../../components";
-import { useRoute, useNavigation } from "@react-navigation/native";
+import { useNavigation } from "@react-navigation/native";
 import { useQuery, useMutation } from '@apollo/client';
 import { QUERY, MUTATION } from "../../graphql";
 import { moneyUtils } from '../../utils';
@@ -11,10 +11,10 @@ import FontAwesome5Icon from "react-native-vector-icons/FontAwesome5";
 export default function WithDraw(props) {
 
   const navigation = useNavigation();
-  const route = useRoute();
   const [showModal, setShowModal] = React.useState(false);
+  const [showModal1, setShowModal1] = React.useState(false);
+
   const [amount, setAmount] = React.useState('');
-  const [success, setSuccess] = React.useState(false);
 
   const onChangeAmount = (value) => setAmount(value);
 
@@ -37,10 +37,7 @@ export default function WithDraw(props) {
     },
     onCompleted: (data) => {
       refetch();
-      setSuccess(true);
-      setTimeout(() => {
-        setSuccess(false);
-      }, 5000);
+      setShowModal1(true);
     },
     onError: (error) => {
       Toast(error.message, 'danger', 'top-right');
@@ -86,29 +83,10 @@ export default function WithDraw(props) {
             </View>
           </View>
         </View>
-        {success ? (<Alert w="100%" status="success">
-          <VStack space={1} flexShrink={1} w="100%" alignItems="center">
-            <Alert.Icon size="md" />
-            <Text fontSize="md" fontWeight="medium" _dark={{
-              color: "coolGray.800"
-            }}>
-              Yêu cầu đã được gửi!
-            </Text>
 
-            <Box _text={{
-              textAlign: "center"
-            }} _dark={{
-              _text: {
-                color: "coolGray.600"
-              }
-            }}>
-              Yêu cầu rút tiền của bạn đã được nhận, vui lòng chờ xét duyệt. Tiền sẽ được chuyển vào tài khoản của bạn trong vòng 48h.
-            </Box>
-          </VStack>
-        </Alert>) : null}
         <ButtonCustom title="Yêu cầu rút tiền" width="90%" height="6%" onPress={requestWithdrawHandler} />
 
-        <Modal isOpen={showModal} onClose={() => setShowModal(false)}>
+        <Modal isOpen={showModal} onClose={() => setShowModal(false)} closeOnOverlayClick={false}>
           <Modal.Content maxWidth="400px">
             <Modal.CloseButton />
             <Modal.Header>Rút tiền</Modal.Header>
@@ -130,6 +108,43 @@ export default function WithDraw(props) {
                   requestWithdraw();
                 }}>
                   Gửi
+                </Button>
+              </Button.Group>
+            </Modal.Footer>
+          </Modal.Content>
+        </Modal>
+
+        <Modal isOpen={showModal1} onClose={() => setShowModal1(false)} closeOnOverlayClick={false}>
+          <Modal.Content maxWidth="400px">
+            <Modal.Body>
+              <Alert w="100%" status="success">
+                <VStack w="100%" alignItems="center">
+                  <Alert.Icon size="md" mb="2" />
+                  <Text fontSize="md" fontWeight="medium" _dark={{
+                    color: "coolGray.800"
+                  }}>
+                    Yêu cầu đã được gửi!
+                  </Text>
+
+                  <Box _text={{
+                    textAlign: "center"
+                  }} _dark={{
+                    _text: {
+                      color: "coolGray.600"
+                    }
+                  }}>
+                    Yêu cầu rút tiền của bạn đã được nhận, vui lòng chờ xét duyệt. Tiền sẽ được chuyển vào tài khoản của bạn trong vòng 48h.
+                  </Box>
+                </VStack>
+              </Alert>
+            </Modal.Body>
+            <Modal.Footer>
+              <Button.Group space={2}>
+                <Button onPress={() => {
+                  setShowModal1(false);
+                  navigation.goBack();
+                }}>
+                  OK
                 </Button>
               </Button.Group>
             </Modal.Footer>
