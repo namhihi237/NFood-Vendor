@@ -136,5 +136,9 @@ export default {
 
   ADD_BANK: gql`mutation AddBankAccount($bankName: String!, $accountName: String!, $accountNumber: String!, $type: roleEnum!) {
     addBankAccount(bankName: $bankName, accountName: $accountName, accountNumber: $accountNumber, type: $type)
+  }`,
+
+  REQUEST_WITHDRAW: gql`mutation RequestWithdraw($amount: Float!, $type: roleEnum!) {
+    requestWithdraw(amount: $amount, type: $type)
   }`
 }

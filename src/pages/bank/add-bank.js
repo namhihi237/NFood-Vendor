@@ -69,7 +69,7 @@ export default function AddBank(props) {
 
               {
                 BANKS.map((item, index) => {
-                  return (<Select.Item label={`${item.vn_name} - ${item.shortName}`}
+                  return (<Select.Item key={index} label={`${item.vn_name} - ${item.shortName}`}
                     value={`${item.vn_name} - ${item.shortName}`} />)
                 })
               }

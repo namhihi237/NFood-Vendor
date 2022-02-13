@@ -1,12 +1,12 @@
 import { Text, Box, View, Pressable, StatusBar, Center } from "native-base";
-import React, { useEffect, useState } from 'react';
-import { StyleSheet, TouchableOpacity, Dimensions, Image, FlatList } from 'react-native';
+import React from 'react';
+import { StyleSheet, Dimensions, Image, FlatList } from 'react-native';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import { useNavigation, useRoute } from '@react-navigation/native';
-import { useMutation, useQuery } from '@apollo/client';
+import { useQuery } from '@apollo/client';
 import { TabView, SceneMap } from 'react-native-tab-view';
 
-import { InputField, ButtonCustom, Toast, Header } from '../../components';
+import { Header } from '../../components';
 import { SCREEN } from "../../constants"
 import Order from './order';
 import Report from './report';
@@ -75,7 +75,7 @@ export default function Manager(props) {
           const borderColor = index === i ? 'warning.600' : 'coolGray.200';
 
           return (
-            <Box borderBottomWidth="3" borderColor={borderColor} flex={1} alignItems="center" p="3" cursor="pointer">
+            <Box borderBottomWidth="3" borderColor={borderColor} flex={1} alignItems="center" p="3" cursor="pointer" key={i}>
               <Pressable
                 onPress={() => {
                   setIndex(i);
@@ -110,5 +110,4 @@ const styles = StyleSheet.create({
     flex: 1,
     display: 'flex',
   },
-
 });

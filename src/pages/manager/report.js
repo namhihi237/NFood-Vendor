@@ -1,9 +1,9 @@
 import React, { useState, useCallback } from 'react';
-import { StyleSheet, TouchableOpacity, Image } from 'react-native';
+import { StyleSheet, TouchableOpacity } from 'react-native';
 import { Text, View } from "native-base";
-import { moneyUtils, orderUtils, timeUtils } from "../../utils";
+import { moneyUtils, timeUtils } from "../../utils";
 import { QUERY } from "../../graphql";
-import { useMutation, useQuery } from '@apollo/client';
+import { useQuery } from '@apollo/client';
 import MonthPicker from 'react-native-month-year-picker';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { useNavigation } from '@react-navigation/native';
@@ -49,12 +49,19 @@ const Report = (props) => {
     [time, showPicker],
   );
 
-  const { data } = useQuery(QUERY.GET_REPORT, {
+  const { data, refetch } = useQuery(QUERY.GET_REPORT, {
     variables: {
       type,
       time,
     },
   });
+
+
+  React.useEffect(() => {
+    navigation.addListener('focus', () => {
+      refetch();
+    });
+  }, []);
 
   const renderTime = (time) => {
     if (type === 'DATE') {
