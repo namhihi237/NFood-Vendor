@@ -104,7 +104,9 @@ const Report = (props) => {
       <View style={styles.reportMoney}>
         <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginBottom: 10, marginHorizontal: wp('5%') }}>
           <Text>Tài khoản của cửa hàng</Text>
-          <Text underline color="#1d4ed8">Lịch sử giao dịch</Text>
+          <TouchableOpacity onPress={() => navigation.navigate(SCREEN.TRANSACTION_HISTORY)}>
+            <Text underline color="#1d4ed8">Lịch sử giao dịch</Text>
+          </TouchableOpacity>
         </View>
         <View style={{ height: 1, backgroundColor: "#4f4f4f4f", marginBottom: 15 }}></View>
         <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginBottom: 10, marginHorizontal: wp('5%') }}>

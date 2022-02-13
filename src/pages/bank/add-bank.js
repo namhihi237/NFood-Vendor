@@ -34,14 +34,12 @@ export default function AddBank(props) {
       navigation.goBack();
     },
     onError: (error) => {
-      console.log(error);
       Toast(error.message, 'danger', 'top-right');
     },
     refetchQueries: [{ query: QUERY.GET_PROFILE }],
   })
 
   const addBankAccount = () => {
-    console.log(bankName, accountNumber, accountName);
     if (!bankName || !accountName || !accountNumber) {
       Toast('Vui lòng nhập đầy đủ thông tin', 'danger', 'top-right');
       return;

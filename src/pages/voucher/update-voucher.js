@@ -19,9 +19,6 @@ export default function UpdateVoucher(props) {
   const [show1, setShow1] = useState(false);
   const [modalVisible, setModalVisible] = React.useState(false)
 
-
-  console.log(route.params.item);
-
   const [promoCode, setPromoCode] = useState(route.params.item.promoCode);
   const [discountType, setDiscountType] = useState(route.params.item.discountType);
   const [discount, setDiscount] = useState(route.params.item.discount ? route.params.item.discount + '' : 0);

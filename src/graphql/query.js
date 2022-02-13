@@ -173,5 +173,21 @@ export default {
         bankName
       }
     }
+  }`,
+
+  GET_TRANSACTIONS: gql`query GetTransactions($type: String!) {
+    getTransactions(type: $type) {
+      _id
+      amount
+      type
+      status
+      bank {
+        accountNumber
+        accountName
+        bankName
+      } 
+      currency
+      createdAt
+    }
   }`
 };

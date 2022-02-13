@@ -14,6 +14,7 @@ import ReportItem from "./report-item";
 import { InfoDetail, UpdateTime, UpdateTimeDetail, UpdateProfile } from "./info-detail";
 import { AddBank } from './bank';
 import WithDraw from "./withdraw";
+import TransactionHistory from "./transaction-history";
 
 export {
   Register,
@@ -41,5 +42,6 @@ export {
   UpdateTimeDetail,
   UpdateProfile,
   AddBank,
-  WithDraw
+  WithDraw,
+  TransactionHistory
 };  

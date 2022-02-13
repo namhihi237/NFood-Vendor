@@ -27,7 +27,6 @@ export default function UpdateTime(props) {
   })
 
   const updateToggleItem = (item) => {
-    console.log(item);
     updateTime({
       variables: {
         timeOpen: {

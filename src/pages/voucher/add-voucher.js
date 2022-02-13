@@ -50,7 +50,6 @@ export default function AddVoucher(props) {
     const currentDate = selectedDate || new Date();
     setShow(Platform.OS === 'ios');
     setStartDate(currentDate);
-    console.log(currentDate);
   };
 
   const onChange1 = (event, selectedDate) => {

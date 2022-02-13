@@ -29,4 +29,5 @@ export default {
   UPDATE_PROFILE: 'updateProfile',
   ADD_BANK: 'addBank',
   WITHDRAW: 'withdraw',
+  TRANSACTION_HISTORY: 'transactionHistory',
 }
