@@ -54,6 +54,7 @@ export default {
         _id
         content
         image
+        orderId
         createdAt
       }
       total
@@ -85,6 +86,7 @@ export default {
     name
     acceptedShippingAt
     estimatedDeliveryTime
+    deliveredAt
     paymentStatus
     orderStatus
     createdAt
@@ -189,5 +191,45 @@ export default {
       currency
       createdAt
     }
-  }`
+  }`,
+
+  GET_ORDER_BY_ID: gql`query GetOrderById($id: ID!) {
+    getOrderById(id: $id) {
+      _id
+      invoiceNumber
+      subTotal
+      shipping
+      discount
+      total
+      orderItems {
+        price
+        quantity
+        name
+        image
+        note
+        buyerName
+      }
+      address
+      phoneNumber
+      name
+      acceptedShippingAt
+      estimatedDeliveryTime
+      paymentStatus
+      orderStatus
+      deliveredAt
+      createdAt
+      buyer {
+        name
+        image
+        phoneNumber
+      }
+      shipper {
+        _id
+        name
+        phoneNumber
+        image
+      }
+      paymentMethod
+    }
+  }`,
 };

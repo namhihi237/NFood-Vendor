@@ -11,15 +11,26 @@ import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import { moneyUtils, orderUtils, timeUtils } from "../../utils";
 
 export default function OrderDetail(props) {
-  const order = props.route.params.order;
-  const noImage = 'https://res.cloudinary.com/do-an-cnpm/image/upload/v1637807216/user_ilxv1x.png';
-  const navigation = useNavigation();
+  // const order = props.route.params.order;
 
-  const renderNumberOfOrders = (items) => {
+  const noImage = "https://res.cloudinary.com/do-an-cnpm/image/upload/v1646043555/DoAnTN/user1_ougwyl.png";
+  const navigation = useNavigation();
+  const [order, setOrder] = useState(null);
+  const renderNumberOfOrders = (items = []) => {
     return items.reduce((acc, item) => {
       return acc + item.quantity;
     }, 0);
   }
+
+  const { data } = useQuery(QUERY.GET_ORDER_BY_ID, {
+    variables: {
+      id: props.route.params.orderId
+    },
+    fetchPolicy: 'network-only',
+    onCompleted: (data) => {
+      setOrder(data.getOrderById);
+    },
+  });
 
   const callPhone = (phone) => {
     // remove + 
@@ -27,9 +38,28 @@ export default function OrderDetail(props) {
     Linking.openURL(`tel:${phoneNumber}`);
   }
 
+  const renderStatus = (order) => {
+    switch (order?.orderStatus) {
+      case 'Pending':
+        return 'Đang chờ xử lý';
+      case 'Processing':
+        return 'Đang xử lý';
+      case 'Shipping':
+        return 'Đang giao hàng';
+      case 'Delivered':
+        return 'Đã giao hàng';
+      case 'Cancelled':
+        return 'Đã hủy';
+      case 'Failed':
+        return 'Giao hàng thất bại';
+      default:
+        return 'Đang chờ xử lý';
+    }
+  }
+
   return (
     <View style={styles.mainContainer}>
-      <Header title={`#${order.invoiceNumber}`} icon="arrow-left" onPress={() => navigation.goBack()} />
+      <Header title={`#${order?.invoiceNumber}`} icon="arrow-left" onPress={() => navigation.goBack()} />
       <ScrollView >
         <View style={styles.shipper}>
           <View style={{ flexDirection: 'row', alignItems: 'center' }}>
@@ -40,22 +70,26 @@ export default function OrderDetail(props) {
             </View>
           </View>
           <TouchableOpacity onPress={() => callPhone(order?.buyer?.phoneNumber)}>
-            <FontAwesome5 name="phone-alt" size={wp('8%')} color="#16a34a" />
+            <FontAwesome5 name="phone-alt" size={wp('6%')} color="#16a34a" />
           </TouchableOpacity>
         </View>
 
         <View style={styles.orderLine}>
           <View style={styles.invoiceNumber}>
-            <Text color="#4f4f4f4f">Mã đơn hàng</Text>
-            <Text bold>#{order.invoiceNumber}</Text>
+            <Text color="#B2B6BB">Mã đơn hàng</Text>
+            <Text bold>#{order?.invoiceNumber}</Text>
           </View>
           <View style={styles.invoiceNumber}>
-            <Text color="#4f4f4f4f">Thời gian đặt</Text>
-            <Text color="#4f4f4f4f">{timeUtils.convertFullTime(new Date(order.createdAt - 0))}</Text>
+            <Text color="#B2B6BB">Thời gian đặt</Text>
+            <Text color="#B2B6BB">{timeUtils.convertFullTime(new Date(order?.createdAt - 0))}</Text>
           </View>
           <View style={styles.invoiceNumber}>
-            <Text color="#4f4f4f4f">Thời gian lấy đơn</Text>
-            <Text color="#4f4f4f4f">{order.acceptedShippingAt}</Text>
+            <Text color="#B2B6BB">Thời gian lấy đơn</Text>
+            <Text color="#B2B6BB">{order?.acceptedShippingAt}</Text>
+          </View>
+          <View style={styles.invoiceNumber}>
+            <Text color="#B2B6BB">Thời gian giao hàng</Text>
+            <Text color="#B2B6BB">{order?.deliveredAt || 'Chưa xác định'}</Text>
           </View>
         </View>
 
@@ -65,17 +99,21 @@ export default function OrderDetail(props) {
             <View>
               <Text bold>Người giao hàng</Text>
               <Text bold>{order?.shipper?.name}</Text>
-              <Text >{"0983748473738"}</Text>
+              <Text >{order?.shipper?.phoneNumber}</Text>
             </View>
           </View>
           <TouchableOpacity onPress={() => callPhone(order?.shipper?.phoneNumber)}>
-            <FontAwesome5 name="phone-alt" size={wp('8%')} color="#16a34a" />
+            <FontAwesome5 name="phone-alt" size={wp('6%')} color="#16a34a" />
           </TouchableOpacity>
+        </View>
+
+        <View style={{ ...styles.shipper, alignItems: 'center', justifyContent: 'center' }}>
+          <Text bold fontSize="md">{order ? renderStatus(order) : ''}</Text>
         </View>
 
         <View style={styles.orders}>
           {
-            order.orderItems.map((item, index) => {
+            order?.orderItems.map((item, index) => {
               return (
                 <View key={index} style={styles.orderItem}>
                   <Text>{item.name}</Text>
@@ -89,15 +127,15 @@ export default function OrderDetail(props) {
         <View style={styles.total}>
           <View style={styles.money}>
             <Text >Tổng tiền</Text>
-            <Text>{moneyUtils.convertVNDToString(order.subTotal)} đ</Text>
+            <Text>{moneyUtils.convertVNDToString(order?.subTotal)} đ</Text>
           </View>
           <View style={styles.money}>
             <Text >Giảm giá</Text>
-            <Text>-{moneyUtils.convertVNDToString(order.discount)} đ</Text>
+            <Text>-{moneyUtils.convertVNDToString(order?.discount)} đ</Text>
           </View>
           <View style={styles.money}>
-            <Text bold>Tổng thu ({renderNumberOfOrders(order.orderItems)} món)</Text>
-            <Text bold>{moneyUtils.convertVNDToString(order.total)} đ</Text>
+            <Text bold>Tổng thu ({renderNumberOfOrders(order?.orderItems)} món)</Text>
+            <Text bold>{moneyUtils.convertVNDToString(order?.total)} đ</Text>
           </View>
         </View>
       </ScrollView>

@@ -37,7 +37,7 @@ export default function Manager(props) {
 
   const renderItems = (order, index) => {
     return (<Order order={order} index={index} onPress={() => {
-      navigation.navigate(SCREEN.ORDER_DETAIL, { order });
+      navigation.navigate(SCREEN.ORDER_DETAIL, { orderId: order._id });
     }} />);
   }
 

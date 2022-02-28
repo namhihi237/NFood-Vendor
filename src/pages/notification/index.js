@@ -32,13 +32,15 @@ export default function Notification(props) {
 
   const renderItem = (item) => {
     return (
-      <TouchableOpacity >
+      <TouchableOpacity onPress={() => navigation.navigate(SCREEN.ORDER_DETAIL, {
+        orderId: item.orderId,
+      })}>
         <View style={{ flexDirection: 'row', backgroundColor: '#fff', paddingTop: 10 }}>
           <Image source={require('../../../assets/images/no-order.png')} style={{ width: wp('15%'), height: wp('15%'), marginLeft: wp('4%') }} />
-          <View style={{ marginRight: 10, paddingRight: wp('24%') }}>
-            <Text style={{ fontSize: wp('3.4%'), marginTop: hp('1%') }}>{item.content}</Text>
+          <View style={{ marginRight: 10, paddingRight: wp('18%') }}>
+            <Text style={{ fontSize: wp('3.4%'), marginTop: hp('1%'), marginRight: 1 }}>{item.content}</Text>
             <View style={{ justifyContent: 'flex-end', flexDirection: 'row', marginTop: 5 }}>
-              <Text style={{ color: '#B2B6BB', fontSize: wp('3%') }} italic>{timeUtils.convertFullTime(new Date(item.createdAt - 0))}</Text>
+              <Text style={{ color: '#B2B6BB', fontSize: wp('3%'), marginRight: 10 }} italic>{timeUtils.convertFullTime(new Date(item.createdAt - 0))}</Text>
             </View>
           </View>
         </View>
