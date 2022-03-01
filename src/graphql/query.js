@@ -232,4 +232,44 @@ export default {
       paymentMethod
     }
   }`,
+
+  GET_NEW_ORDERS: gql`query GetNewOrderByVendor {
+    getNewOrderByVendor {
+      _id
+      invoiceNumber
+      subTotal
+      shipping
+      discount
+      total
+      orderItems {
+        _id
+        price
+        quantity
+        name
+        image
+        note
+      }
+      address
+      phoneNumber
+      name
+      estimatedDeliveryTime
+      paymentStatus
+      orderStatus
+      createdAt
+      shipper {
+        _id
+        name
+        image
+        phoneNumber
+      }
+      buyer {
+        _id
+        name
+        image
+        phoneNumber
+      }
+      paymentMethod
+      vendorId
+    }
+  }`
 };

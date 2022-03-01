@@ -133,8 +133,7 @@ const Report = (props) => {
         <MonthPicker
           onChange={onValueChange}
           value={time}
-          minimumDate={new Date()}
-          maximumDate={new Date(2025, 5)}
+          maximumDate={new Date()}
           locale="vi"
         />
       )}

@@ -28,7 +28,7 @@ const Order = (props) => {
           <View ml='2'>
             <View mt='1' style={{ flexDirection: 'row', justifyContent: 'space-between', width: wp('75%') }} alignItems='center'>
               <Text mt='2' bold fontSize='md'>#{order.invoiceNumber}</Text>
-              <Text mt='2' fontSize='sm'>{order.acceptedShippingAt}</Text>
+              <Text mt='2' fontSize='sm'>{timeUtils.convertFullTime(order.createdAt - 0)}</Text>
             </View>
             <View mt='1' style={{ flexDirection: 'row', justifyContent: 'space-between', width: wp('75%') }} >
               <Text>x {countNumberOfItems(order.orderItems)} (món)</Text>

@@ -44,7 +44,7 @@ export default function TransactionHistory(props) {
       return 'Chờ duyệt';
     } else if (item.status === 'success') {
       return 'Thành công';
-    } else if (item.status === 'failed') {
+    } else if (item.status === 'reject') {
       return 'Thất bại';
     }
   }
@@ -54,7 +54,7 @@ export default function TransactionHistory(props) {
       return '#FFC107';
     } else if (item.status === 'success') {
       return '#4CAF50';
-    } else if (item.status === 'failed') {
+    } else if (item.status === 'reject') {
       return '#F44336';
     }
   }

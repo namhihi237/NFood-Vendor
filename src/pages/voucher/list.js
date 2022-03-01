@@ -112,6 +112,7 @@ export default function Vouchers(props) {
       />
       <Fab
         position="absolute"
+        style={{ backgroundColor: '#00A000' }}
         size="sm"
         icon={<FontAwesome5Icon name="plus" size={20} color="white" />}
         onPress={() => navigation.navigate(SCREEN.ADD_VOUCHER)}

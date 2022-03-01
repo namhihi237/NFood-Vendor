@@ -1,6 +1,6 @@
-import { Text, HStack, VStack, View, Switch, Stack, Center } from "native-base";
+import { Text, Button, VStack, View, Switch, Modal, Center } from "native-base";
 import React, { useEffect, useState } from 'react';
-import { StyleSheet, TouchableOpacity, ScrollView, Image } from 'react-native';
+import { StyleSheet, TouchableOpacity, ScrollView, Image, FlatList } from 'react-native';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import { useNavigation } from '@react-navigation/native';
 import { useMutation, useQuery } from '@apollo/client';
@@ -8,12 +8,14 @@ import { QUERY, MUTATION } from "../../graphql";
 import { InputField, ButtonCustom, Toast, Header } from '../../components';
 import { SCREEN } from "../../constants";
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
-import { moneyUtils } from "../../utils";
+import { moneyUtils, timeUtils, orderUtils } from "../../utils";
+import { paddingBottom } from "styled-system";
 
 export default function NewOrder(props) {
 
   const [isReceiveOrder, setIsReceiveOrder] = useState(false);
-
+  const [modalVisible, setModalVisible] = React.useState(false);
+  const [order, setOrder] = useState(null);
   const { data } = useQuery(QUERY.GET_PROFILE, {
     variables: {
       role: "vendor"
@@ -24,15 +26,62 @@ export default function NewOrder(props) {
     }
   });
 
+  const { data: newOrder } = useQuery(QUERY.GET_NEW_ORDERS, {
+    fetchPolicy: "network-only",
+    pollInterval: 1000,
+  });
+
   const [updateStatusReceiveOrder] = useMutation(MUTATION.UPDATE_STATUS_RECEIVE_ORDER, {
     onCompleted: (data) => {
       setIsReceiveOrder(data.updateStatusReceiveOrder);
     },
   });
 
-  const renderNewOrder = () => {
+  const countNumberOfItems = (orderItems) => {
+    let count = 0;
+    orderItems.forEach(item => {
+      count += item.quantity;
+    });
+    return count;
+  }
+
+  const renderItem = (order, index) => {
     return (
-      <View>
+      <TouchableOpacity onPress={() => {
+        setOrder(order);
+        setModalVisible(true);
+      }} key={index}>
+        <View shadow={3}>
+          <View style={{ paddingVertical: 10 }} flexDirection='row'>
+            <View style={{ marginLeft: wp('5%') }}>
+              <View mt='1' style={{ flexDirection: 'row', justifyContent: 'space-between', width: wp('90%') }} alignItems='center'>
+                <Text mt='2' bold fontSize='md'>#{order.invoiceNumber}</Text>
+                <Text mt='2' fontSize='sm'>{timeUtils.convertFullTime(order.createdAt - 0)}</Text>
+              </View>
+              <View mt='1' style={{ flexDirection: 'row', justifyContent: 'space-between', width: wp('90%') }} >
+                <Text>x {countNumberOfItems(order.orderItems)} (món)</Text>
+                <Text style={{ color: '#22c55e' }}>+ {moneyUtils.convertVNDToString(order.subTotal - order.discount)} đ</Text>
+              </View>
+
+              <View style={{ flexDirection: 'row', justifyContent: 'space-between' }} mt='2'>
+                <Text color={orderUtils.orderStatusColor(order.orderStatus)}>
+                  {orderUtils.orderStatus(order.orderStatus)}
+                </Text>
+                <Text>{order.deliveredAt}</Text>
+              </View>
+            </View>
+          </View>
+          <View style={{ height: 1 }}></View>
+        </View>
+      </TouchableOpacity>
+    )
+  }
+
+  const navigation = useNavigation();
+  return (
+    <View style={styles.mainContainer}>
+      <Header title={"Đơn hàng mới"} />
+      <View style={{ paddingBottom: hp('13%') }}>
         <View style={styles.receiveOrder}>
           <Text fontSize="lg">Sẵn sàng nhận đơn</Text>
           <Switch
@@ -47,82 +96,75 @@ export default function NewOrder(props) {
             }}
           />
         </View>
-        <View style={styles.orderContainer}>
-          <View style={styles.cardOrder}>
-            <View style={styles.card}>
-              <View bg="#F24F04" pl="2" pr="2" rounded="md">
-                <Text color="#fff" bold>Mới</Text>
-              </View>
-              <Text color="#F24F04" bold>#43242FSS</Text>
-              <Text color="#F24F04" bold>18:23</Text>
-            </View>
-          </View>
-          <Stack space={3} mt="4">
-            <HStack space={3} style={{ paddingHorizontal: wp('5%') }} >
-              <Text flex="1" >Mã đơn hàng</Text>
-              <Text flex="1" >Trạng thái</Text>
-            </HStack>
-            <HStack  >
-              <Center h="10" bg="#444251" flex="1">
-                <Text color="#fff">#43242FSS</Text>
-              </Center>
-              <Center h="10" bg="#959BA4" flex="1" >
-                <Text color="#fff">Đang chờ</Text>
-              </Center>
-            </HStack>
-          </Stack>
-
-          <Text mt="4" mb="2" style={{ paddingHorizontal: wp('5%') }}>Shipper nhận hàng</Text>
-          <View bg="#F24F04" pl="2" pr="2" flexDirection="row" justifyContent="space-between" alignItems="center" >
-            <View flexDirection="row" alignItems="center">
-              <Image source={require('../../../assets/images/logo.png')} style={{ width: wp('14%'), height: wp('14%') }} />
-              <View ml="4">
-                <Text bold color="#fff">Nguyễn Văn A</Text>
-                <Text color="#fff">0989898989</Text>
-              </View>
-            </View>
-            <View bg="#fff" alignItems="center" justifyContent="center" pl="3" pr="3" h="40%" rounded="xl">
-              <TouchableOpacity>
-                <Text color="#F24F04" bold>Gọi shipper</Text>
-              </TouchableOpacity>
-            </View>
-          </View>
-
-          <Stack mt="4">
-            <HStack style={{ paddingHorizontal: wp('5%') }} >
-              <Text flex="4" >Chi tiết đơn hàng</Text>
-              <Center flex="1" >
-                <Text ml="4" >Số lượng</Text>
-              </Center>
-            </HStack>
-            <HStack>
-              <View h="10" bg="#D7D9DB" flex="4" justifyContent="center" style={{ paddingHorizontal: wp('5%') }}>
-                <Text >Banh beo</Text>
-              </View>
-              <Center h="10" bg="#959BA4" flex="1" >
-                <Text color="#fff">x2</Text>
-              </Center>
-            </HStack>
-          </Stack>
-          <View style={styles.total}>
-            <Text bold fontSize="md">Tiền thu từ shipper</Text>
-            <Text bold fontSize="md" color="#ff0000">{moneyUtils.convertVNDToString(120000)} đ</Text>
-          </View>
-          <ButtonCustom>
-            <Text>Bắt đầu lám</Text>
-          </ButtonCustom>
-        </View>
+        <FlatList
+          data={newOrder?.getNewOrderByVendor || []}
+          renderItem={({ item, index }) => renderItem(item, index)}
+          keyExtractor={(item, index) => item._id}
+        />
       </View>
-    )
-  }
+      <Modal isOpen={modalVisible} onClose={setModalVisible} size={"xl"}>
+        <Modal.Content>
+          <Modal.CloseButton />
+          <Modal.Header>{`#${order?.invoiceNumber}`}</Modal.Header>
+          <Modal.Body>
+            <ScrollView>
+              <View style={{ padding: wp('1%') }}>
+                <Center>
+                  <Text bold fontSize="md">Danh sách món</Text>
+                </Center>
+                {
+                  order?.orderItems.map((item, index) => {
+                    return (
+                      <View key={index} style={{ flexDirection: 'row', justifyContent: 'space-between', paddingVertical: wp('1%') }}>
+                        <Text>{item.name}</Text>
+                        <Text>x {item.quantity}</Text>
+                      </View>
+                    )
+                  })
+                }
+                <View style={{ height: 1, backgroundColor: '#B2B6BB' }}></View>
+                <View style={{ flexDirection: 'row', justifyContent: 'space-between', paddingVertical: wp('1%') }}>
+                  <Text bold>Tổng tiền hàng</Text>
+                  <Text bold color="#be123c"> {moneyUtils.convertVNDToString(order?.subTotal)} đ</Text>
+                </View>
 
-  const navigation = useNavigation();
-  return (
-    <View style={styles.mainContainer}>
-      <Header title={"Đơn hàng mới"} />
-      <ScrollView style={{}}>
-        {renderNewOrder()}
-      </ScrollView>
+                <View style={{ flexDirection: 'row', justifyContent: 'space-between', paddingVertical: wp('1%') }}>
+                  <Text bold>Giảm giá</Text>
+                  <Text bold> {moneyUtils.convertVNDToString(order?.discount) || 0} đ</Text>
+                </View>
+
+                <View style={{ height: 1, backgroundColor: '#B2B6BB' }}></View>
+
+                {
+                  order?.shipper ? (<View>
+                    <Center mt="2" mb="2">
+                      <Text bold fontSize="md">Thông tin người giao hàng</Text>
+                    </Center>
+
+                    <View style={{ flexDirection: 'row', paddingVertical: wp('1%'), alignItems: 'center' }}>
+                      <Image source={{ uri: order?.shipper?.image }} style={{ width: 70, height: 70, borderRadius: 35 }} />
+                      <View style={{ marginLeft: 20 }}>
+                        <Text bold fontSize="md" mb="2">{order?.shipper?.name}</Text>
+                        <Text>{order?.shipper?.phoneNumber}</Text>
+                      </View>
+                    </View>
+                  </View>) : null
+                }
+
+              </View>
+            </ScrollView>
+          </Modal.Body>
+          <Modal.Footer>
+            <Button.Group space={2}>
+              <Button onPress={() => {
+                setModalVisible(false);
+              }}>
+                Đã hiểu
+              </Button>
+            </Button.Group>
+          </Modal.Footer>
+        </Modal.Content>
+      </Modal>
     </View>
   );
 }
@@ -132,42 +174,19 @@ const styles = StyleSheet.create({
     flex: 1,
     display: 'flex',
   },
-  cardOrder: {
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
   orderContainer: {
     backgroundColor: '#fff',
     marginTop: 5,
     paddingTop: 10,
 
   },
-  card: {
-    borderWidth: 1,
-    paddingHorizontal: 10,
-    borderColor: '#959BA4',
-    borderRadius: 10,
-    justifyContent: 'center',
-    alignItems: 'center',
-    paddingVertical: 5,
-
-  },
   receiveOrder: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    marginTop: 10,
     paddingHorizontal: wp('5%'),
     backgroundColor: "#fff",
-    paddingTop: 10
+    paddingTop: 10,
+    paddingBottom: 10
   },
-  total: {
-    paddingHorizontal: wp('5%'),
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    paddingVertical: 5,
-    marginTop: 10,
-  }
-
 });
