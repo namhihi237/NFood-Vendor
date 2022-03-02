@@ -1,11 +1,8 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useNavigation } from '@react-navigation/native';
-import { View, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, StyleSheet, TouchableOpacity, Text } from 'react-native';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
-import { Text } from 'native-base';
-import { storageUtils } from '../utils'
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
-import { SCREEN } from '../constants';
 const HeaderBack = (props) => {
   const navigation = useNavigation();
 
@@ -15,7 +12,7 @@ const HeaderBack = (props) => {
         <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backButton}>
           <FontAwesome5 name="chevron-left" size={24} color="#444251" />
         </TouchableOpacity>
-        <Text fontSize="xl" bold style={styles.text}>{props.title}</Text>
+        <Text style={styles.text}>{props.title}</Text>
       </View>
       <View style={styles.right}>
         {props.button ? (<TouchableOpacity>
@@ -47,7 +44,8 @@ const styles = StyleSheet.create({
   },
   text: {
     marginLeft: 15,
-    color: '#444251'
+    color: '#444251',
+    fontFamily: 'Dongle-Bold'
   },
   backButton: {
     height: 40,

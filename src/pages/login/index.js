@@ -178,7 +178,7 @@ const styles = StyleSheet.create({
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'center',
-    marginTop: hp('25%'),
+    marginTop: hp('15%'),
 
   },
   textLink: {

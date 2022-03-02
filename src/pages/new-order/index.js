@@ -29,6 +29,9 @@ export default function NewOrder(props) {
   const { data: newOrder } = useQuery(QUERY.GET_NEW_ORDERS, {
     fetchPolicy: "network-only",
     pollInterval: 1000,
+    onCompleted: (data) => {
+      console.log(data);
+    }
   });
 
   const [updateStatusReceiveOrder] = useMutation(MUTATION.UPDATE_STATUS_RECEIVE_ORDER, {

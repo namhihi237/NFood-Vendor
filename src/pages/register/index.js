@@ -48,6 +48,7 @@ export default function Register(props) {
     >
       <Loading status={loading} message={'Đăng ký'} />
       < View style={styles.mainContainer} >
+        <Image alt="logo" source={require('../../../assets/images/logo.png')} style={{ height: 100, width: 100 }} />
         <Text fontSize="3xl" bold style={styles.title}>Đăng Ký tài khoản</Text>
         <InputField
           iconName={"mobile-alt"}

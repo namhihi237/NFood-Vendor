@@ -1,21 +1,13 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useNavigation } from '@react-navigation/native';
 import { View, StyleSheet, TouchableWithoutFeedback, Text } from 'react-native';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
-import { Button, Switch } from "native-base";
-import { Badge } from 'react-native-elements';
-// import { Text } from 'native-base';
-import { storageUtils } from '../utils'
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import { SCREEN } from '../constants';
-import { SUBSCRIPTION, QUERY, MUTATION } from "../graphql";
-import { useQuery, useMutation, useSubscription } from '@apollo/client';
-import FontAwesome5Icon from 'react-native-vector-icons/FontAwesome5';
 const Header = (props) => {
   const navigation = useNavigation();
 
   const onPress = props.onPress ? props.onPress : () => navigation.navigate(SCREEN.TAB);
-
   return (
     <View style={styles.header}>
       <TouchableWithoutFeedback onPress={onPress}>
@@ -23,9 +15,7 @@ const Header = (props) => {
       </TouchableWithoutFeedback>
       <Text style={styles.text}>{props.title}</Text>
 
-      <TouchableWithoutFeedback onPress={() => {
-
-      }}>
+      <TouchableWithoutFeedback onPress={() => { }}>
         <View>
           <FontAwesome5 name="bell" size={wp('5%')} color="white" style={styles.icon} onPress={() => navigation.navigate(SCREEN.NOTIFICATION)} />
         </View>
@@ -55,9 +45,8 @@ const styles = StyleSheet.create({
   },
   text: {
     color: '#fff',
-    fontFamily: 'SF-UI-Text-Semibold',
-    fontWeight: "bold",
-    fontSize: hp('2%'),
+    fontFamily: 'Dongle-Bold',
+    fontSize: hp('3.7%'),
   },
 
   right: {
@@ -67,5 +56,4 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     width: wp('18%'),
   },
-
 });
