@@ -5,7 +5,7 @@ import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
-import { ButtonCustom, Toast, Loading, HeaderBack } from '../../components';
+import { ButtonCustom, Toast, Loading, Header } from '../../components';
 import InputField from './input-field';
 import { QUERY, client, MUTATION } from '../../graphql';
 import { useMutation, useLazyQuery } from '@apollo/client';
@@ -116,7 +116,7 @@ const EditItem = (props) => {
   return (
     <ScrollView style={styles.container} contentInsetAdjustmentBehavior="automatic"
       showsVerticalScrollIndicator={false} >
-      <HeaderBack title="Sửa thông tin món ăn" />
+      <Header title="Sửa thông tin món ăn" icon="arrow-left" onPress={() => navigation.goBack()} />
       <Loading status={editItemLoading || loadingUploadImage || loadingImage || loading} />
       <View style={styles.content}>
         <View>

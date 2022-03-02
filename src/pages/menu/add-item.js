@@ -5,7 +5,7 @@ import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
-import { ButtonCustom, Toast, Loading, HeaderBack } from '../../components';
+import { ButtonCustom, Toast, Loading, Header } from '../../components';
 import InputField from './input-field';
 import { QUERY, client, MUTATION } from '../../graphql';
 import { useMutation, useLazyQuery } from '@apollo/client';
@@ -89,7 +89,7 @@ const AddItem = (props) => {
   return (
     <ScrollView style={styles.container} contentInsetAdjustmentBehavior="automatic"
       showsVerticalScrollIndicator={false} >
-      <HeaderBack title="Thêm món mới" />
+      <Header title="Thêm món mới" icon="arrow-left" onPress={() => navigation.goBack()} />
       <Loading status={loadingAddItem || loadingUploadImage || loadingImage} />
       <View style={styles.content}>
         <View>

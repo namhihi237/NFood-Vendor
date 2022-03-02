@@ -5,7 +5,7 @@ import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
-import { ButtonCustom, Toast, Loading, HeaderBack } from '../../components';
+import { ButtonCustom, Toast, Loading, Header } from '../../components';
 import InputField from './input-field';
 import { QUERY, client, MUTATION } from '../../graphql';
 import { useMutation, useQuery } from '@apollo/client';
@@ -59,7 +59,7 @@ const EditCategory = (props) => {
   return (
     <ScrollView style={styles.container} contentInsetAdjustmentBehavior="automatic"
       showsVerticalScrollIndicator={false}>
-      <HeaderBack title="Chỉnh sửa danh mục" />
+      <Header title="Chỉnh sửa danh mục" icon="arrow-left" onPress={() => navigation.goBack()} />
       <Loading status={loading || loadingUpdate} />
       <View style={styles.content}>
         <View>
@@ -115,7 +115,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: wp('5%'),
     marginTop: 10,
     justifyContent: 'space-between',
-    height: hp('85%'),
+    height: hp('90%'),
   },
   deleteIcon: {
     flexDirection: 'row',

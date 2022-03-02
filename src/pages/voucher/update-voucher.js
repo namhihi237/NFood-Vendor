@@ -1,16 +1,15 @@
-import {
-  Text, Pressable, View, Box, Button, Modal, Input, FormControl, Radio
-} from "native-base";
-import React, { useState } from "react";
+import { Text, View, Button, Modal, Input, FormControl, Radio } from "native-base";
+import React, { useState, useCallback } from "react";
 import { StyleSheet, ScrollView, Image, TouchableOpacity, FlatList } from 'react-native';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import { SCREEN } from "../../constants";
 import { Header, Toast, ButtonCustom } from "../../components";
 import { useRoute, useNavigation } from "@react-navigation/native";
-import { useQuery, useMutation } from '@apollo/client';
-import { QUERY, MUTATION } from "../../graphql";
+import { useMutation } from '@apollo/client';
+import { MUTATION } from "../../graphql";
 import DateTimePicker from '@react-native-community/datetimepicker';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
+import { timeUtils } from '../../utils';
 export default function UpdateVoucher(props) {
 
   const navigation = useNavigation();
@@ -23,7 +22,7 @@ export default function UpdateVoucher(props) {
   const [discountType, setDiscountType] = useState(route.params.item.discountType);
   const [discount, setDiscount] = useState(route.params.item.discount ? route.params.item.discount + '' : 0);
   const [startDate, setStartDate] = useState(route.params.item.startDate ? new Date(route.params.item.startDate - 0) : null);
-  const [endDate, setEndDate] = useState('');
+  const [endDate, setEndDate] = useState(route.params.item.endDate ? new Date(route.params.item.endDate - 0) : null);
   const [maxDiscount, setMaxDiscount] = useState(route.params.item?.maxDiscount ? route.params.item.maxDiscount + '' : null);
   const [minTotal, setMinTotal] = useState(route.params.item.minTotal ? route.params.item.minTotal + '' : null);
   const [quantity, setQuantity] = useState(route.params.item.quantity ? route.params.item.quantity + '' : null);
@@ -38,25 +37,25 @@ export default function UpdateVoucher(props) {
   const onChangeMinTotal = (value) => setMinTotal(value);
   const onChangeQuantity = (value) => setQuantity(value);
 
-  const showDatepicker = () => {
-    setShow(true);
-  };
 
-  const showDatepicker1 = () => {
-    setShow1(true);
-  };
+  const showDatepicker = useCallback((value) => setShow(value), []);
+  const showDatepicker1 = useCallback((value) => setShow1(value), []);
 
-  const onChange = (event, selectedDate) => {
-    const currentDate = selectedDate || new Date();
-    setShow(Platform.OS === 'ios');
-    setStartDate(currentDate);
-  };
+  const onChange = useCallback((event, selectedDate) => {
+    const currentDate = selectedDate || startDate;
+    setShow(false);
+    if (event.type === 'set') {
+      setStartDate(currentDate);
+    }
+  }, [startDate, showDatepicker]);
 
-  const onChange1 = (event, selectedDate) => {
-    const currentDate = selectedDate || new Date();
-    setShow1(Platform.OS === 'ios');
-    setEndDate(currentDate);
-  };
+  const onChange1 = useCallback((event, selectedDate) => {
+    const currentDate = selectedDate || endDate;
+    setShow1(false);
+    if (event.type === 'set') {
+      setEndDate(currentDate);
+    }
+  }, [endDate, showDatepicker1]);
 
 
   const onChangeRadio = (nextValue) => {
@@ -123,6 +122,7 @@ export default function UpdateVoucher(props) {
         return;
       }
     }
+
     addVoucher({
       variables: {
         inputVoucher: {
@@ -142,7 +142,7 @@ export default function UpdateVoucher(props) {
   return (
     <View style={styles.container} >
       <Header title={"Chi tiết mã khuyến mãi"} icon="arrow-left" onPress={() => navigation.goBack()} />
-      <ScrollView style={{}}>
+      <ScrollView style={{ paddingBottom: 10 }}>
         <FormControl
           isInvalid
           w={{
@@ -178,11 +178,11 @@ export default function UpdateVoucher(props) {
             <FormControl.Label mt="4">Thời gian áp dụng (không bắt buộc)</FormControl.Label>
             <View flexDirection='row' justifyContent='space-between' alignItems='center'>
               <TouchableOpacity onPress={showDatepicker} >
-                <Input placeholder="Chọn ngày gian bắt đầu" isDisabled={true} value={startDate} />
+                <Input placeholder="Chọn ngày gian bắt đầu" isDisabled={true} value={startDate && timeUtils.convertDate(startDate)} />
               </TouchableOpacity>
               <Text>đến ngày</Text>
               <TouchableOpacity onPress={showDatepicker1} >
-                <Input placeholder="Chọn ngày kết thúc..." isDisabled={true} />
+                <Input placeholder="Chọn ngày kết thúc..." isDisabled={true} value={endDate && timeUtils.convertDate(endDate)} />
               </TouchableOpacity>
             </View>
             <FormControl.Label mt="4">Số tiền giảm tối đa cho loại phần trăm (không bắt buộc)</FormControl.Label>
@@ -205,7 +205,7 @@ export default function UpdateVoucher(props) {
           {show && (
             <DateTimePicker
               testID="dateTimePicker"
-              value={startDate}
+              value={startDate || new Date()}
               mode={'date'}
               display="default"
               onChange={onChange}
@@ -215,7 +215,7 @@ export default function UpdateVoucher(props) {
           {show1 && (
             <DateTimePicker
               testID="dateTimePicker1"
-              value={new Date()}
+              value={endDate || new Date()}
               mode={'date'}
               display="default"
               onChange={onChange1}
@@ -223,7 +223,7 @@ export default function UpdateVoucher(props) {
             />
           )}
         </FormControl>
-        <View style={{ paddingHorizontal: wp('5%'), marginTop: hp('5%') }}>
+        <View style={{ paddingHorizontal: wp('5%'), marginBottom: 20, marginTop: 20 }}>
           <ButtonCustom title="Cập nhật" width="90" height="6" onPress={createNewVoucher} />
         </View>
         <Modal

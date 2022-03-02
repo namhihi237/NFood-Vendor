@@ -1,6 +1,6 @@
 import { Text, View } from "native-base";
 import React from 'react';
-import { StyleSheet, TouchableOpacity, Image } from 'react-native';
+import { StyleSheet, TouchableOpacity, Image, ScrollView } from 'react-native';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import { useNavigation } from '@react-navigation/native';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
@@ -37,39 +37,41 @@ export default function Store(props) {
   return (
     <View style={styles.mainContainer}>
       <Header title={"Cửa hàng"} />
-      <View style={styles.infoContainer}>
-        <Image source={{ uri: data?.getUser ? data?.getUser?.image : null }} style={styles.avatar} />
-        <View>
-          <Text bold fontSize="xl">{data?.getUser?.name}</Text>
-          <Text fontSize="lg">{data?.getUser?.phoneNumber}</Text>
+      <ScrollView>
+        <View style={styles.infoContainer}>
+          <Image source={{ uri: data?.getUser ? data?.getUser?.image : null }} style={styles.avatar} />
+          <View>
+            <Text bold fontSize="xl">{data?.getUser?.name}</Text>
+            <Text fontSize="lg">{data?.getUser?.phoneNumber}</Text>
+          </View>
         </View>
-      </View>
-      <View>
-        <TouchableOpacity style={styles.card} onPress={() => navigation.navigate(SCREEN.VOUCHERS)}>
-          <Text style={styles.title}>Quản lý khuyến mãi</Text>
-          <FontAwesome5 name="arrow-right" size={20} color="#F24F04" />
+        <View>
+          <TouchableOpacity style={styles.card} onPress={() => navigation.navigate(SCREEN.VOUCHERS)}>
+            <Text style={styles.title}>Quản lý khuyến mãi</Text>
+            <FontAwesome5 name="arrow-right" size={20} color="#F24F04" />
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.card} onPress={() => navigation.navigate(SCREEN.MENU)}>
+            <Text style={styles.title}>Chỉnh sửa menu</Text>
+            <FontAwesome5 name="arrow-right" size={20} color="#F24F04" />
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.card} onPress={() => navigation.navigate(SCREEN.REVIEWS)}>
+            <Text style={styles.title}>Đánh giá của khách hàng</Text>
+            <FontAwesome5 name="arrow-right" size={20} color="#F24F04" />
+          </TouchableOpacity>
+        </View>
+        <View style={styles.cardOnline}>
+          <TouchableOpacity style={styles.btn} onPress={() => navigation.navigate(SCREEN.ADD_BANK, {
+            bank: data?.getUser?.bank
+          })}>
+            <Text style={{ fontSize: 16, fontFamily: 'SF-UI-Text-Regular' }}>Thêm tài khoản ngân hàng</Text>
+            <FontAwesome5 name="arrow-right" size={20} color="#F24F04" />
+          </TouchableOpacity>
+        </View>
+        <Info user={data?.getUser ? data?.getUser : null} />
+        <TouchableOpacity style={styles.logOut} onPress={logOut}>
+          <Text fontSize="md" mr="2" color="#0891b2">Đăng xuất</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.card} onPress={() => navigation.navigate(SCREEN.MENU)}>
-          <Text style={styles.title}>Chỉnh sửa menu</Text>
-          <FontAwesome5 name="arrow-right" size={20} color="#F24F04" />
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.card} onPress={() => navigation.navigate(SCREEN.REVIEWS)}>
-          <Text style={styles.title}>Đánh giá của khách hàng</Text>
-          <FontAwesome5 name="arrow-right" size={20} color="#F24F04" />
-        </TouchableOpacity>
-      </View>
-      <View style={styles.cardOnline}>
-        <TouchableOpacity style={styles.btn} onPress={() => navigation.navigate(SCREEN.ADD_BANK, {
-          bank: data?.getUser?.bank
-        })}>
-          <Text style={{ fontSize: 16, fontFamily: 'SF-UI-Text-Regular' }}>Thêm tài khoản ngân hàng</Text>
-          <FontAwesome5 name="arrow-right" size={20} color="#F24F04" />
-        </TouchableOpacity>
-      </View>
-      <Info user={data?.getUser ? data?.getUser : null} />
-      <TouchableOpacity style={styles.logOut} onPress={logOut}>
-        <Text fontSize="md" mr="2" color="#0891b2">Đăng xuất</Text>
-      </TouchableOpacity>
+      </ScrollView>
     </View >
   );
 }

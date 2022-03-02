@@ -45,7 +45,8 @@ const styles = StyleSheet.create({
   text: {
     marginLeft: 15,
     color: '#444251',
-    fontFamily: 'Dongle-Bold'
+    fontFamily: 'Dongle-Bold',
+    fontSize: hp('3.7%'),
   },
   backButton: {
     height: 40,
