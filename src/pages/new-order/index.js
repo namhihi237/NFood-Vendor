@@ -1,18 +1,14 @@
-import { Text, Button, VStack, View, Switch, Modal, Center } from "native-base";
-import React, { useEffect, useState } from 'react';
+import { Text, Button, View, Switch, Modal, Center } from "native-base";
+import React, { useState } from 'react';
 import { StyleSheet, TouchableOpacity, ScrollView, Image, FlatList } from 'react-native';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import { useNavigation } from '@react-navigation/native';
 import { useMutation, useQuery } from '@apollo/client';
 import { QUERY, MUTATION } from "../../graphql";
-import { InputField, ButtonCustom, Toast, Header } from '../../components';
-import { SCREEN } from "../../constants";
-import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
+import { Header } from '../../components';
 import { moneyUtils, timeUtils, orderUtils } from "../../utils";
-import { paddingBottom } from "styled-system";
 
 export default function NewOrder(props) {
-
   const [isReceiveOrder, setIsReceiveOrder] = useState(false);
   const [modalVisible, setModalVisible] = React.useState(false);
   const [order, setOrder] = useState(null);
@@ -29,9 +25,6 @@ export default function NewOrder(props) {
   const { data: newOrder } = useQuery(QUERY.GET_NEW_ORDERS, {
     fetchPolicy: "network-only",
     pollInterval: 1000,
-    onCompleted: (data) => {
-      console.log(data);
-    }
   });
 
   const [updateStatusReceiveOrder] = useMutation(MUTATION.UPDATE_STATUS_RECEIVE_ORDER, {
