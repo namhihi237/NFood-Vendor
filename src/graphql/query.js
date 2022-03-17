@@ -193,8 +193,8 @@ export default {
     }
   }`,
 
-  GET_ORDER_BY_ID: gql`query GetOrderById($id: ID!) {
-    getOrderById(id: $id) {
+  GET_ORDER_BY_ID: gql`query GetOderDetail($id: ID!) {
+    getOderDetail(id: $id) {
       _id
       invoiceNumber
       subTotal

@@ -28,7 +28,7 @@ export default function OrderDetail(props) {
     },
     fetchPolicy: 'network-only',
     onCompleted: (data) => {
-      setOrder(data.getOrderById);
+      setOrder(data.getOderDetail);
     },
   });
 
