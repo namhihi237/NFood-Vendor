@@ -48,7 +48,6 @@ const AddCategory = (props) => {
           <Text>Tên danh mục</Text>
           <InputField
             placeholder="Tên danh mục..."
-            onChangeText={(text) => props.onChangeText(text)}
             width="90%"
             onChangeText={onChangeName}
           />
@@ -70,6 +69,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: wp('5%'),
     marginTop: 10,
     justifyContent: 'space-between',
-    height: hp('90%'),
+    height: hp('85%'),
   },
 });

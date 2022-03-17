@@ -64,7 +64,7 @@ const EditCategory = (props) => {
       <View style={styles.content}>
         <View>
           <Text>Tên danh mục</Text>
-          <InputField placeholder="Tên danh mục..." onChangeText={(text) => props.onChangeText(text)} width="90%" onChangeText={onChangeName} value={name} />
+          <InputField placeholder="Tên danh mục..." width="90%" onChangeText={onChangeName} value={name} />
           <TouchableOpacity style={styles.deleteIcon} onPress={() => setModalVisible(!modalVisible)}>
             <View >
               <FontAwesome5 name="trash-alt" size={20} color="red" />
@@ -115,7 +115,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: wp('5%'),
     marginTop: 10,
     justifyContent: 'space-between',
-    height: hp('90%'),
+    height: hp('85%'),
   },
   deleteIcon: {
     flexDirection: 'row',

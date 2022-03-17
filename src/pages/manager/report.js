@@ -52,7 +52,7 @@ const Report = (props) => {
   const { data, refetch } = useQuery(QUERY.GET_REPORT, {
     variables: {
       type,
-      time,
+      time: type === 'DATE' ? timeUtils.formatDate(time) : timeUtils.formatMonth(time),
     },
   });
 
